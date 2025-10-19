@@ -1,0 +1,26 @@
+﻿using StockExchange.Domain.Entities.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace StockExchange.Domain.Entities
+{
+    public class Portfolio : Entity<string>
+    {
+        [Required]
+        public int UserId { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal Deposits { get; set; }
+
+        // Navigation property
+        [NotMapped]
+        public IUser<int>? User { get; set; }
+        public ICollection<PortfolioStock> PortfolioStocks { get; set; } = new List<PortfolioStock>();
+    }
+}

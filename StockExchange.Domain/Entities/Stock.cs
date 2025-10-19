@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace StockExchange.Domain.Entities
+{
+    public class Stock : Entity<int>
+    {
+        [Required]
+        public string TickerSymbol { get; set; }
+
+        [Required]
+        public string FullName { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal CurrentPrice { get; set; }
+
+        [Required]
+        public DateTime CurrentPriceDateTime { get; set; }
+
+        // Navigation properties
+        public ICollection<PortfolioStock> PortfolioStocks { get; set; } = new List<PortfolioStock>();
+        public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
+    }
+}

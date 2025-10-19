@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StockExchange.Domain\StockExchange.Domain.csproj" />
+    <ProjectReference Include="..\StockExchange.Infrastructure\StockExchange.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
