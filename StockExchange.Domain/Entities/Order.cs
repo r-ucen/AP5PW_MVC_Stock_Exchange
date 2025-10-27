@@ -28,10 +28,6 @@ namespace StockExchange.Domain.Entities
         public decimal Quantity { get; set; }
 
         [Required]
-        [MaxLength(15)]
-        public string Status { get; set; } = string.Empty; // "Pending", "Executed", "Cancelled"
-
-        [Required]
         public DateTime CreatedDate { get; set; }
 
         // Navigation properties
