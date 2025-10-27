@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockExchange.Infrastructure.Database;
 
@@ -11,9 +12,11 @@ using StockExchange.Infrastructure.Database;
 namespace StockExchange.Infrastructure.Migrations
 {
     [DbContext(typeof(StockExchangeDbContext))]
-    partial class StockExchangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251027152513_AddImageSrcUrlToStock")]
+    partial class AddImageSrcUrlToStock
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,17 +124,15 @@ namespace StockExchange.Infrastructure.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("ImageSrcUrl")
-                        .HasMaxLength(1024)
-                        .HasColumnType("varchar(1024)");
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("TickerSymbol")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -163,8 +164,7 @@ namespace StockExchange.Infrastructure.Migrations
 
                     b.Property<string>("TransactionType")
                         .IsRequired()
-                        .HasMaxLength(4)
-                        .HasColumnType("varchar(4)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

@@ -10,7 +10,6 @@ namespace StockExchange.Domain.Entities.Interfaces
     {
         string? UserName { get; set; }
         string? Email { get; set; }
-        string? PhoneNumber { get; set; }
         string? FirstName { get; set; }
         string? LastName { get; set; }
     }

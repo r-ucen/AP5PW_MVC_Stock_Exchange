@@ -9,3 +9,4 @@ C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExch
 C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Domain\obj\Debug\net9.0\refint\StockExchange.Domain.dll
 C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Domain\obj\Debug\net9.0\StockExchange.Domain.pdb
 C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Domain\obj\Debug\net9.0\ref\StockExchange.Domain.dll
+C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Domain\obj\Debug\net9.0\StockExchange.Domain.sourcelink.json

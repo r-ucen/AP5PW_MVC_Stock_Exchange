@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace StockExchange.Domain.Entities
 {
+    [Table(nameof(Portfolio))]
     public class Portfolio : Entity<string>
     {
         [Required]

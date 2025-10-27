@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace StockExchange.Domain.Entities
 {
+    [Table(nameof(PortfolioStock))]
     public class PortfolioStock : Entity<int>
     {
         [Required]
@@ -17,6 +18,7 @@ namespace StockExchange.Domain.Entities
         [Required]
         public int StockId { get; set; }
 
+        [Required]
         [Column(TypeName = "decimal(18, 4)")]
         public decimal Quantity { get; set; }
 

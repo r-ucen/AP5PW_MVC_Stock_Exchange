@@ -201,3 +201,4 @@ C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExch
 C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Web\obj\Debug\net9.0\StockExchange.Web.pdb
 C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Web\obj\Debug\net9.0\StockExchange.Web.genruntimeconfig.cache
 C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Web\obj\Debug\net9.0\ref\StockExchange.Web.dll
+C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Web\obj\Debug\net9.0\StockExchange.Web.sourcelink.json

@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 
 namespace StockExchange.Domain.Entities
 {
+    [Table(nameof(Stock))]
     public class Stock : Entity<int>
     {
         [Required]
+        [StringLength(10)]
         public string TickerSymbol { get; set; }
 
         [Required]
+        [StringLength(100)]
         public string FullName { get; set; }
 
         [Required]
@@ -22,6 +25,9 @@ namespace StockExchange.Domain.Entities
 
         [Required]
         public DateTime CurrentPriceDateTime { get; set; }
+
+        [StringLength(1024)]
+        public string? ImageSrcUrl { get; set; }
 
         // Navigation properties
         public ICollection<PortfolioStock> PortfolioStocks { get; set; } = new List<PortfolioStock>();

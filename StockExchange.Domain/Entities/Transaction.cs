@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace StockExchange.Domain.Entities
 {
+    [Table(nameof(Transaction))]
     public class Transaction : Entity<int>
     {
         [Required]
@@ -21,6 +22,7 @@ namespace StockExchange.Domain.Entities
         public int OrderId { get; set; }
 
         [Required]
+        [StringLength(4)]
         public string TransactionType { get; set; } = string.Empty; // "Buy" or "Sell"
 
         [Required]

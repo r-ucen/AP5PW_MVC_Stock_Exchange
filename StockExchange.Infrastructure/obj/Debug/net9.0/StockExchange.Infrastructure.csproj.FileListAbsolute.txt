@@ -15,3 +15,4 @@ C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExch
 C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Infrastructure\obj\Debug\net9.0\StockExchange.Infrastructure.pdb
 C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Infrastructure\obj\Debug\net9.0\StockExchange.Infrastructure.genruntimeconfig.cache
 C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Infrastructure\obj\Debug\net9.0\ref\StockExchange.Infrastructure.dll
+C:\Users\rucen\Documents\school\fifth_sem\pokrocile-webove-technologie\StockExchange\StockExchange.Infrastructure\obj\Debug\net9.0\StockExchange.Infrastructure.sourcelink.json
