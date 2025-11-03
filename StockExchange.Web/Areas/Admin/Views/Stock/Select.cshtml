@@ -19,6 +19,7 @@
                 <th scope="col">@nameof(Stock.CurrentPrice)</th>
                 <th scope="col">@nameof(Stock.CurrentPriceDateTime)</th>
                 <th scope="col">@nameof(Stock.ImageSrcUrl)</th>
+                    <th scope="col">Delete</th>
             </tr>
         </thead>
 
@@ -34,6 +35,7 @@
                         <td >$ @stock.CurrentPrice</td>
                         <td >@stock.CurrentPriceDateTime</td>
                         <td >@stock.ImageSrcUrl</td>
+                        <td><a asp-action="Delete" asp-route-id="@stock.Id">Delete</a></td>
                     </tr>
                 }
             </tbody>

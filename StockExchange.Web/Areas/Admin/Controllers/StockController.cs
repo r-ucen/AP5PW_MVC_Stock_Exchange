@@ -35,5 +35,18 @@ namespace StockExchange.Web.Areas.Admin.Controllers
             _stockAppService.Create(stock);
             return RedirectToAction(nameof(StockController.Select));
         }
+
+        // Delete
+        public IActionResult Delete(int id)
+        {
+            bool deleted = _stockAppService.Delete(id);
+            if (deleted)
+            {
+                return RedirectToAction(nameof(StockController.Select));
+            } else
+            {
+                return NotFound();
+            }
+        }
     }
 }

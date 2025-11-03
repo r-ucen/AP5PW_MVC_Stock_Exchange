@@ -11,5 +11,6 @@ namespace StockExchange.Application.Abstraction
     {
         IList<Stock> Select();
         void Create(Stock stock);
+        bool Delete(int id);
     }
 }

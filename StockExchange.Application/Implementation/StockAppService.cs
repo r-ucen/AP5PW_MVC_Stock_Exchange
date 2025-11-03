@@ -4,6 +4,7 @@ using StockExchange.Infrastructure.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,6 +28,24 @@ namespace StockExchange.Application.Implementation
         {
             _stockExchangeDbContext.Stocks.Add(stock);
             _stockExchangeDbContext.SaveChanges();
+        }
+
+        public bool Delete(int id)
+        {
+            bool deleted = false;
+
+            Stock? stock = _stockExchangeDbContext.Stocks.FirstOrDefault(
+                    s => s.Id == id
+                );
+
+            if (stock != null)
+            {
+                _stockExchangeDbContext.Stocks.Remove(stock);
+                _stockExchangeDbContext.SaveChanges();
+                deleted = true;
+            }
+
+            return deleted;
         }
     }
 }
