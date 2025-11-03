@@ -14,10 +14,26 @@ namespace StockExchange.Web.Areas.Admin.Controllers
             _stockAppService = stockAppService;
         }
 
+        // Select
         public IActionResult Select()
         {
             IList<Stock> stocks = _stockAppService.Select();
             return View(stocks);
+        }
+
+        // Create
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Stock stock)
+        {
+            stock.CurrentPriceDateTime = DateTime.UtcNow;
+            _stockAppService.Create(stock);
+            return RedirectToAction(nameof(StockController.Select));
         }
     }
 }

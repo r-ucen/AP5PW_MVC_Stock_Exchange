@@ -10,5 +10,6 @@ namespace StockExchange.Application.Abstraction
     public interface IStockAppService
     {
         IList<Stock> Select();
+        void Create(Stock stock);
     }
 }

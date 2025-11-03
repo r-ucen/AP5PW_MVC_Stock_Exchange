@@ -1,0 +1,31 @@
+﻿@model Stock
+
+@{
+    ViewData["Title"] = "Create Stock";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label class="form-label" asp-for="TickerSymbol"></label>
+        <input class="form-control" asp-for="TickerSymbol">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="FullName"></label>
+        <input class="form-control" asp-for="FullName">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="CurrentPrice"></label>
+        <input class="form-control" asp-for="CurrentPrice">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="ImageSrcUrl"></label>
+        <input class="form-control" asp-for="ImageSrcUrl">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

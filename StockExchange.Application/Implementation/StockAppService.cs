@@ -22,5 +22,11 @@ namespace StockExchange.Application.Implementation
         {
             return _stockExchangeDbContext.Stocks.ToList();
         }
+
+        public void Create(Stock stock)
+        {
+            _stockExchangeDbContext.Stocks.Add(stock);
+            _stockExchangeDbContext.SaveChanges();
+        }
     }
 }
