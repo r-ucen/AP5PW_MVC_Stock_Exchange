@@ -1,4 +1,44 @@
-﻿@{
+﻿@model IList<Stock>
+
+@{
     ViewData["Title"] = "Stock Administration";
 }
 <h1>@ViewData["Title"]</h1>
+
+@{
+    if (Model != null && Model.Count > 0)
+    {
+        <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">@nameof(Stock.Id)</th>
+                <th scope="col">@nameof(Stock.TickerSymbol)</th>
+                <th scope="col">@nameof(Stock.FullName)</th>
+                <th scope="col">@nameof(Stock.CurrentPrice)</th>
+                <th scope="col">@nameof(Stock.CurrentPriceDateTime)</th>
+                <th scope="col">@nameof(Stock.ImageSrcUrl)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+                @for (int i =0; i < Model.Count; i++)
+                {
+                    Stock stock = Model[i];
+
+                    <tr>
+                        <th scope="row">@stock.Id</th>
+                        <td>@stock.TickerSymbol</td>
+                        <td >@stock.FullName</td>
+                        <td >$ @stock.CurrentPrice</td>
+                        <td >@stock.CurrentPriceDateTime</td>
+                        <td >@stock.ImageSrcUrl</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Stocks table is empty</p>
+    }
+}

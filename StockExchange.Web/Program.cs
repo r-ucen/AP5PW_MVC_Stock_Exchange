@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using StockExchange.Application.Abstraction;
+using StockExchange.Application.Implementation;
 using StockExchange.Infrastructure.Database;
 using StockExchange.Infrastructure.Identity;
 
@@ -19,6 +21,8 @@ builder.Services.AddDbContext<StockExchangeDbContext>(
 builder.Services.AddIdentity<User, Role>()
      .AddEntityFrameworkStores<StockExchangeDbContext>()
      .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<IStockAppService, StockAppService>();
 
 var app = builder.Build();
 
