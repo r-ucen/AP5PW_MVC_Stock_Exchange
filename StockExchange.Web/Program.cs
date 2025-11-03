@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StockExchange.Infrastructure.Database;
+using StockExchange.Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,11 @@ var serverVersion = ServerVersion.AutoDetect(connectionString);
 builder.Services.AddDbContext<StockExchangeDbContext>(
     options => options.UseMySql(connectionString, serverVersion)
 );
+
+//Configuration for Identity
+builder.Services.AddIdentity<User, Role>()
+     .AddEntityFrameworkStores<StockExchangeDbContext>()
+     .AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -28,9 +35,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",

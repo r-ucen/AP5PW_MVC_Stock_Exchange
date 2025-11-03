@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockExchange.Infrastructure.Database;
 
@@ -11,9 +12,11 @@ using StockExchange.Infrastructure.Database;
 namespace StockExchange.Infrastructure.Migrations
 {
     [DbContext(typeof(StockExchangeDbContext))]
-    partial class StockExchangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251102225841_AddIdentity")]
+    partial class AddIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,7 +270,7 @@ namespace StockExchange.Infrastructure.Migrations
                         {
                             Id = 1,
                             CurrentPrice = 150.00m,
-                            CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40, 0, DateTimeKind.Unspecified),
+                            CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40, 101, DateTimeKind.Utc).AddTicks(3199),
                             FullName = "Apple Inc.",
                             ImageSrcUrl = "/img/stocks/AAPL.png",
                             TickerSymbol = "AAPL"
@@ -276,7 +279,7 @@ namespace StockExchange.Infrastructure.Migrations
                         {
                             Id = 2,
                             CurrentPrice = 400.00m,
-                            CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40, 0, DateTimeKind.Unspecified),
+                            CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40, 101, DateTimeKind.Utc).AddTicks(3880),
                             FullName = "Microsoft Corporation",
                             ImageSrcUrl = "/img/stocks/MSFT.png",
                             TickerSymbol = "MSFT"
@@ -285,7 +288,7 @@ namespace StockExchange.Infrastructure.Migrations
                         {
                             Id = 3,
                             CurrentPrice = 280.00m,
-                            CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40, 0, DateTimeKind.Unspecified),
+                            CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40, 101, DateTimeKind.Utc).AddTicks(3902),
                             FullName = "Alphabet Inc.",
                             ImageSrcUrl = "/img/stocks/GOOGL.png",
                             TickerSymbol = "GOOGL"
@@ -294,7 +297,7 @@ namespace StockExchange.Infrastructure.Migrations
                         {
                             Id = 4,
                             CurrentPrice = 250.00m,
-                            CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40, 0, DateTimeKind.Unspecified),
+                            CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40, 101, DateTimeKind.Utc).AddTicks(3905),
                             FullName = "Amazon.com, Inc.",
                             ImageSrcUrl = "/img/stocks/AMZN.png",
                             TickerSymbol = "AMZN"
@@ -303,7 +306,7 @@ namespace StockExchange.Infrastructure.Migrations
                         {
                             Id = 5,
                             CurrentPrice = 450.00m,
-                            CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40, 0, DateTimeKind.Unspecified),
+                            CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40, 101, DateTimeKind.Utc).AddTicks(3909),
                             FullName = "Tesla, Inc.",
                             ImageSrcUrl = "/img/stocks/TSLA.png",
                             TickerSymbol = "TSLA"
