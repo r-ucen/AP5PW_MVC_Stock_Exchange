@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 using StockExchange.Application.Abstraction;
 using StockExchange.Domain.Entities;
 
@@ -52,11 +53,35 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             _stockAppService.Delete(id);
             return RedirectToAction(nameof(StockController.Select));
+        }
+
+        // Update
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var stock = _stockAppService.Select(id);
+            if (stock == null)
+            {
+                return NotFound();
+            }
+
+            return View(stock);
+        }
+
+        [HttpPost]
+        public IActionResult Update(Stock stock)
+        {
+            if (ModelState.IsValid)
+            {
+                _stockAppService.Update(stock);
+                return RedirectToAction(nameof(StockController.Select));
+            }
+
+            return View(stock);
         }
     }
 }

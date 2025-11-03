@@ -24,6 +24,13 @@ namespace StockExchange.Application.Implementation
             return _stockExchangeDbContext.Stocks.ToList();
         }
 
+        public Stock? Select(int id)
+        {
+            return _stockExchangeDbContext.Stocks.FirstOrDefault(
+                    s => s.Id == id
+                );
+        }
+
         public void Create(Stock stock)
         {
             _stockExchangeDbContext.Stocks.Add(stock);
@@ -46,6 +53,24 @@ namespace StockExchange.Application.Implementation
             }
 
             return deleted;
+        }
+
+        public bool Update(Stock stock)
+        {
+            var existingStock = _stockExchangeDbContext.Stocks.FirstOrDefault(
+                    s => s.Id == stock.Id
+                );
+
+            if (existingStock == null)
+            {
+                return false;
+            }
+
+            _stockExchangeDbContext.Entry(existingStock).CurrentValues.SetValues(stock);
+            existingStock.Id = stock.Id;
+            existingStock.CurrentPriceDateTime = DateTime.UtcNow;
+            _stockExchangeDbContext.SaveChanges();
+            return true;
         }
     }
 }

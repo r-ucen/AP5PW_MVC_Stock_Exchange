@@ -19,12 +19,12 @@
                 <th scope="col">@nameof(Stock.CurrentPrice)</th>
                 <th scope="col">@nameof(Stock.CurrentPriceDateTime)</th>
                 <th scope="col">@nameof(Stock.ImageSrcUrl)</th>
-                <th scope="col">Delete</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
 
         <tbody>
-                @for (int i =0; i < Model.Count; i++)
+                @for (int i = 0; i < Model.Count; i++)
                 {
                     Stock stock = Model[i];
 
@@ -35,7 +35,10 @@
                         <td>$ @stock.CurrentPrice</td>
                         <td>@stock.CurrentPriceDateTime</td>
                         <td>@stock.ImageSrcUrl</td>
-                        <td><a asp-action="Delete" asp-route-id="@stock.Id">Delete</a></td>
+                        <td>
+                            <a asp-action="Update" asp-route-id="@stock.Id">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@stock.Id">Delete</a>
+                        </td>
                     </tr>
                 }
             </tbody>
