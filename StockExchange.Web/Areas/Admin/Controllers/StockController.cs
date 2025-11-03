@@ -37,16 +37,26 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         }
 
         // Delete
+        [HttpGet]
         public IActionResult Delete(int id)
         {
-            bool deleted = _stockAppService.Delete(id);
-            if (deleted)
+            var stock = _stockAppService.Select().FirstOrDefault(s => s.Id == id);
+            if (stock != null)
             {
-                return RedirectToAction(nameof(StockController.Select));
-            } else
+                return View(stock);
+            }
+            else
             {
                 return NotFound();
             }
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _stockAppService.Delete(id);
+            return RedirectToAction(nameof(StockController.Select));
         }
     }
 }
