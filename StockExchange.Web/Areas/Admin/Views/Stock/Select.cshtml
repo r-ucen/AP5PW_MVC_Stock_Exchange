@@ -5,25 +5,26 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<a asp-action="Create">Create Stock</a>
+<a asp-action="Create" class="btn btn-primary">Create Stock</a>
 
 @{
     if (Model != null && Model.Count > 0)
     {
+    <div class="table-responsive">
         <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">@nameof(Stock.Id)</th>
-                <th scope="col">@nameof(Stock.TickerSymbol)</th>
-                <th scope="col">@nameof(Stock.FullName)</th>
-                <th scope="col">@nameof(Stock.CurrentPrice)</th>
-                <th scope="col">@nameof(Stock.CurrentPriceDateTime)</th>
-                <th scope="col">@nameof(Stock.ImageSrcUrl)</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
+            <thead>
+                <tr>
+                    <th scope="col">@nameof(Stock.Id)</th>
+                    <th scope="col">@nameof(Stock.TickerSymbol)</th>
+                    <th scope="col">@nameof(Stock.FullName)</th>
+                    <th scope="col">@nameof(Stock.CurrentPrice)</th>
+                    <th scope="col">@nameof(Stock.CurrentPriceDateTime)</th>
+                    <th scope="col">@nameof(Stock.ImageSrcUrl)</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
 
-        <tbody>
+            <tbody>
                 @for (int i = 0; i < Model.Count; i++)
                 {
                     Stock stock = Model[i];
@@ -36,13 +37,14 @@
                         <td>@stock.CurrentPriceDateTime</td>
                         <td>@stock.ImageSrcUrl</td>
                         <td>
-                            <a asp-action="Update" asp-route-id="@stock.Id">Edit</a>
-                            <a asp-action="Delete" asp-route-id="@stock.Id">Delete</a>
+                            <a asp-action="Update" asp-route-id="@stock.Id" class="btn btn-secondary">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@stock.Id" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+    </div>
     }
     else
     {
