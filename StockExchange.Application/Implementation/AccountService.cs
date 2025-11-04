@@ -14,24 +14,24 @@ namespace StockExchange.Application.Implementation
     public class AccountIdentityService : IAccountService
     {
         UserManager<User> userManager;
-        SignInManager<User> sigInManager;
+        SignInManager<User> signInManager;
 
-        public AccountIdentityService(UserManager<User> userManager, SignInManager<User> sigInManager)
+        public AccountIdentityService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             this.userManager = userManager;
-            this.sigInManager = sigInManager;
+            this.signInManager = signInManager;
         }
 
 
         public async Task<bool> Login(LoginViewModel vm)
         {
-            var result = await sigInManager.PasswordSignInAsync(vm.Username, vm.Password, true, true);
+            var result = await signInManager.PasswordSignInAsync(vm.Username, vm.Password, true, true);
             return result.Succeeded;
         }
 
         public Task Logout()
         {
-            return sigInManager.SignOutAsync();
+            return signInManager.SignOutAsync();
         }
 
 
