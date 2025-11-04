@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using StockExchange.Application.Abstraction;
 using StockExchange.Domain.Entities;
+using StockExchange.Infrastructure.Identity.Enums;
 
 namespace StockExchange.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = nameof(Roles.Admin) + ", " + nameof(Roles.Manager))]
     public class StockController : Controller
     {
         IStockAppService _stockAppService;
