@@ -13,7 +13,7 @@ namespace StockExchange.Domain.Entities
     public class PortfolioStock : Entity<int>
     {
         [Required]
-        public string PortfolioId { get; set; } = string.Empty;
+        public int PortfolioId { get; set; }
 
         [Required]
         public int StockId { get; set; }

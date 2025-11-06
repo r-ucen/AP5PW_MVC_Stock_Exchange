@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace StockExchange.Domain.Entities
 {
     [Table(nameof(Portfolio))]
-    public class Portfolio : Entity<string>
+    public class Portfolio : Entity<int>
     {
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
