@@ -49,6 +49,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddScoped<IStockAppService, StockAppService>();
 builder.Services.AddScoped<ITransactionAppService, TransactionAppService>();
 builder.Services.AddScoped<IAccountService, AccountIdentityService>();
+builder.Services.AddScoped<IOrderAppService, OrderAppService>();
 
 var app = builder.Build();
 

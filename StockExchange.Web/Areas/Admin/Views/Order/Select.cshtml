@@ -1,0 +1,43 @@
+﻿@model IList<Order>
+
+@{
+    ViewData["Title"] = "Order Administration";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@{
+    if (Model != null && Model.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">@nameof(Order.Id)</th>
+                        <th scope="col">@nameof(Order.UserId)</th>
+                        <th scope="col">@nameof(Order.StockId)</th>
+                        <th scope="col">@nameof(Order.OrderType)</th>
+                        <th scope="col">@nameof(Order.Quantity)</th>
+                        <th scope="col">@nameof(Order.CreatedDate)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <th scope="row">@order.Id</th>
+                            <td>@order.UserId</td>
+                            <td>@order.StockId</td>
+                            <td>@order.OrderType</td>
+                            <td>@order.Quantity</td>
+                            <td>@order.CreatedDate</td>
+                        </tr>
+                    }
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>Orders table is empty</p>
+    }
+}
