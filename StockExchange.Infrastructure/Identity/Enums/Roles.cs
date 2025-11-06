@@ -10,6 +10,6 @@ namespace StockExchange.Infrastructure.Identity.Enums
     {
         Admin,
         Manager,
-        User
+        Customer
     }
 }

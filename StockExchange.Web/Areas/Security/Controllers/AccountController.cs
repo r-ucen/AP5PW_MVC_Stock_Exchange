@@ -27,7 +27,7 @@ namespace StockExchange.Web.Areas.Security.Controllers
         {
             if (ModelState.IsValid)
             {
-                string[] errors = await _accountService.Register(registerVM, Roles.User);
+                string[] errors = await _accountService.Register(registerVM, Roles.Customer);
 
                 if (errors == null)
                 {

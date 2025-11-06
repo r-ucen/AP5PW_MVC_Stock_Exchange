@@ -2,7 +2,26 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome back, @User.Identity.Name</h1>
+        <p>Manage your portfolio and discover new investment opportunities.</p>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-4 fw-bold">Welcome to StockExchange</h1>
+                <p class="fs-4">Your modern platform for tracking and trading stocks in real-time. Join our community to start building your portfolio, discover new investment opportunities, and stay ahead of the market.</p>
+                <hr class="my-4">
+                <p>
+                    <a class="btn btn-primary btn-lg" asp-area="Security" asp-controller="Account" asp-action="Register" role="button">Create an Account</a>
+                    <a class="btn btn-secondary btn-lg" asp-area="Security" asp-controller="Account" asp-action="Login" role="button">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+}

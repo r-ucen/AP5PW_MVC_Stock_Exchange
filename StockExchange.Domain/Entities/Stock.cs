@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockExchange.Domain.Validations;
 
 namespace StockExchange.Domain.Entities
 {
@@ -13,6 +14,7 @@ namespace StockExchange.Domain.Entities
     {
         [Required]
         [StringLength(10)]
+        [AllLettersCapitalized]
         public string TickerSymbol { get; set; }
 
         [Required]

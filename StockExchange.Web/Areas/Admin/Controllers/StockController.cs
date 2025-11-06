@@ -35,9 +35,14 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Stock stock)
         {
-            stock.CurrentPriceDateTime = DateTime.UtcNow;
-            _stockAppService.Create(stock);
-            return RedirectToAction(nameof(StockController.Select));
+            if (ModelState.IsValid)
+            {
+                stock.CurrentPriceDateTime = DateTime.UtcNow;
+                _stockAppService.Create(stock);
+                return RedirectToAction(nameof(StockController.Select));
+            }
+
+            return View(stock);
         }
 
         // Delete
