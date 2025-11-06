@@ -12,7 +12,7 @@ namespace StockExchange.Domain.Entities
     [Table(nameof(Portfolio))]
     public class Portfolio : Entity<string>
     {
-        [Required]
+        [ForeignKey(nameof(User))]
         public int UserId { get; set; }
 
         [Required]
@@ -20,7 +20,6 @@ namespace StockExchange.Domain.Entities
         public decimal Deposits { get; set; }
 
         // Navigation property
-        [NotMapped]
         public IUser<int>? User { get; set; }
         public ICollection<PortfolioStock> PortfolioStocks { get; set; } = new List<PortfolioStock>();
     }

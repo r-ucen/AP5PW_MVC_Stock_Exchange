@@ -28,9 +28,27 @@ namespace StockExchange.Infrastructure.Database
         {
             base.OnModelCreating(modelBuilder);
 
+            // map the user relationships
+            modelBuilder.Entity<Order>()
+                .HasOne<User>(e => e.User as User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne<User>(e => e.User as User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId);
+
+            modelBuilder.Entity<Portfolio>()
+                .HasOne<User>(e => e.User as User)
+                .WithOne()
+                .HasForeignKey<Portfolio>(e => e.UserId);
+
+            // seeding Entities
             StockInit stockInit = new StockInit();
             modelBuilder.Entity<Stock>().HasData(stockInit.getStocks());
 
+            // seeding Identity
             // Identity - User and Role init
             RolesInit rolesInit = new RolesInit();
             modelBuilder.Entity<Role>().HasData(rolesInit.GetRolesAMC());

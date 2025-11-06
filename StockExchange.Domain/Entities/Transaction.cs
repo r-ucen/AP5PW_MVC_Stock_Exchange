@@ -12,7 +12,7 @@ namespace StockExchange.Domain.Entities
     [Table(nameof(Transaction))]
     public class Transaction : Entity<int>
     {
-        [Required]
+        [ForeignKey(nameof(User))]
         public int UserId { get; set; }
 
         [Required]
@@ -37,7 +37,6 @@ namespace StockExchange.Domain.Entities
         public DateTime TransactionDate { get; set; }
 
         // Navigation properties
-        [NotMapped]
         public IUser<int>? User { get; set; }
         public Stock? Stock { get; set; }
         public Order? Order { get; set; }
