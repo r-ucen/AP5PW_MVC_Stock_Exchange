@@ -1,0 +1,48 @@
+﻿ @model IList<Transaction>
+
+@{
+    ViewData["Title"] = "Transaction Administration";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@{
+    if (Model!= null && Model.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">@nameof(Transaction.Id)</th>
+                        <th scope="col">@nameof(Transaction.UserId)</th>
+                        <th scope="col">@nameof(Transaction.StockId)</th>
+                        <th scope="col">@nameof(Transaction.OrderId)</th>
+                        <th scope="col">@nameof(Transaction.TransactionType)</th>
+                        <th scope="col">@nameof(Transaction.Quantity)</th>
+                        <th scope="col">@nameof(Transaction.Price)</th>
+                        <th scope="col">@nameof(Transaction.TransactionDate)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var transaction in Model)
+                    {
+                        <tr>
+                            <th scope="row">@transaction.Id</th>
+                            <td>@transaction.UserId</td>
+                            <td>@transaction.StockId</td>
+                            <td>@transaction.OrderId</td>
+                            <td>@transaction.TransactionType</td>
+                            <td>@transaction.Quantity</td>
+                            <td>@transaction.Price</td>
+                            <td>@transaction.TransactionDate</td>
+                        </tr>
+                    }
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>Transactions table is empty</p>
+    }
+}
