@@ -54,6 +54,12 @@ namespace StockExchange.Infrastructure.Database
             TransactionInit transactionInit = new TransactionInit();
             modelBuilder.Entity<Transaction>().HasData(transactionInit.GetTransactions());
 
+            PortfolioInit portfolioInit = new PortfolioInit();
+            modelBuilder.Entity<Portfolio>().HasData(portfolioInit.getPortfolio());
+
+            PortfolioStockInit portfolioStockInit = new PortfolioStockInit();
+            modelBuilder.Entity<PortfolioStock>().HasData(portfolioStockInit.GetPortfolioStocks());
+
             // seeding Identity
             // Identity - User and Role init
             RolesInit rolesInit = new RolesInit();

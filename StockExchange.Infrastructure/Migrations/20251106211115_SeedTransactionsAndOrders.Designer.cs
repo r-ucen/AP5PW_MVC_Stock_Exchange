@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockExchange.Infrastructure.Database;
 
@@ -11,9 +12,11 @@ using StockExchange.Infrastructure.Database;
 namespace StockExchange.Infrastructure.Migrations
 {
     [DbContext(typeof(StockExchangeDbContext))]
-    partial class StockExchangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251106211115_SeedTransactionsAndOrders")]
+    partial class SeedTransactionsAndOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
