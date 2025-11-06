@@ -19,7 +19,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     Deposits = 10000.00m
                 },
                 new Portfolio {
-                    Id = 1,
+                    Id = 2,
                     UserId = 2, // manager
                     Deposits = 15000.00m
                 }
