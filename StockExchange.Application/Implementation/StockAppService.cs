@@ -68,7 +68,6 @@ namespace StockExchange.Application.Implementation
 
             _stockExchangeDbContext.Entry(existingStock).CurrentValues.SetValues(stock);
             existingStock.Id = stock.Id;
-            existingStock.CurrentPriceDateTime = DateTime.UtcNow;
             _stockExchangeDbContext.SaveChanges();
             return true;
         }

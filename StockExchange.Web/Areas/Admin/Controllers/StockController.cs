@@ -37,7 +37,6 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                stock.CurrentPriceDateTime = DateTime.UtcNow;
                 _stockAppService.Create(stock);
                 return RedirectToAction(nameof(StockController.Select));
             }

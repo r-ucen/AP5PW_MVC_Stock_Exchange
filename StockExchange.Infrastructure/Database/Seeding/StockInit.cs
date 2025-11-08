@@ -20,7 +20,6 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     TickerSymbol = "AAPL",
                     FullName = "Apple Inc.",
                     CurrentPrice = 150.00m,
-                    CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40),
                     ImageSrcUrl = "/img/stocks/AAPL.png"
                 },
                 new Stock
@@ -29,7 +28,6 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     TickerSymbol = "MSFT",
                     FullName = "Microsoft Corporation",
                     CurrentPrice = 400.00m,
-                    CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40),
                     ImageSrcUrl = "/img/stocks/MSFT.png"
                 },
                 new Stock
@@ -38,7 +36,6 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     TickerSymbol = "GOOGL",
                     FullName = "Alphabet Inc.",
                     CurrentPrice = 280.00m,
-                    CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40),
                     ImageSrcUrl = "/img/stocks/GOOGL.png"
                 },
                 new Stock
@@ -47,7 +44,6 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     TickerSymbol = "AMZN",
                     FullName = "Amazon.com, Inc.",
                     CurrentPrice = 250.00m,
-                    CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40),
                     ImageSrcUrl = "/img/stocks/AMZN.png"
                 },
                 new Stock
@@ -56,7 +52,6 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     TickerSymbol = "TSLA",
                     FullName = "Tesla, Inc.",
                     CurrentPrice = 450.00m,
-                    CurrentPriceDateTime = new DateTime(2025, 11, 2, 22, 58, 40),
                     ImageSrcUrl = "/img/stocks/TSLA.png"
                 }
             };

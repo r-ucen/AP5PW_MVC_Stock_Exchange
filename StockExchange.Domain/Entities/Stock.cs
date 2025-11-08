@@ -25,9 +25,6 @@ namespace StockExchange.Domain.Entities
         [Column(TypeName = "decimal(18, 2)")]
         public decimal CurrentPrice { get; set; }
 
-        [Required]
-        public DateTime CurrentPriceDateTime { get; set; }
-
         [StringLength(1024)]
         public string? ImageSrcUrl { get; set; }
 

@@ -18,7 +18,6 @@
                     <th scope="col">@nameof(Stock.TickerSymbol)</th>
                     <th scope="col">@nameof(Stock.FullName)</th>
                     <th scope="col">@nameof(Stock.CurrentPrice)</th>
-                    <th scope="col">@nameof(Stock.CurrentPriceDateTime)</th>
                     <th scope="col">@nameof(Stock.ImageSrcUrl)</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -37,7 +36,6 @@
                             <span>$ </span>
                             <span data-stock-price="@stock.TickerSymbol">@stock.CurrentPrice</span>
                         </td>
-                        <td>@stock.CurrentPriceDateTime</td>
                         <td>@stock.ImageSrcUrl</td>
                         <td>
                             <a asp-action="Update" asp-route-id="@stock.Id" class="btn btn-secondary">Edit</a>

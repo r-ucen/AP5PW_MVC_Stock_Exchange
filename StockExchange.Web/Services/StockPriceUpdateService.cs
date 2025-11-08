@@ -34,7 +34,6 @@ namespace StockExchange.Web.Services
                             var priceChangeRate = (decimal)((_random.NextDouble() - 0.5) * 0.01); // -0.5 % to 0.5 % 
                             var newStockPrice = stockToUpdate.CurrentPrice + (stockToUpdate.CurrentPrice * priceChangeRate);
                             stockToUpdate.CurrentPrice = Math.Round(newStockPrice, 2);
-                            stockToUpdate.CurrentPriceDateTime = DateTime.UtcNow;
 
                             dbContext.SaveChanges();
 
