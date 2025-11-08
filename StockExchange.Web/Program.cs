@@ -4,6 +4,8 @@ using StockExchange.Application.Abstraction;
 using StockExchange.Application.Implementation;
 using StockExchange.Infrastructure.Database;
 using StockExchange.Infrastructure.Identity;
+using StockExchange.Web.Hubs;
+using StockExchange.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +55,10 @@ builder.Services.AddScoped<IOrderAppService, OrderAppService>();
 builder.Services.AddScoped<IPortfolioAppService, PortfolioAppService>();
 builder.Services.AddScoped<IPortfolioStockAppService, PortfolioStockAppService>();
 
+builder.Services.AddSignalR();
+
+builder.Services.AddHostedService<StockPriceUpdateService>();
+
 var app = builder.Build();
 
 // Apply migrations at startup
@@ -77,6 +83,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<StockHub>("/stockHub");
 
 app.MapControllerRoute(
     name: "areas",

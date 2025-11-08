@@ -33,7 +33,10 @@
                         <th scope="row">@stock.Id</th>
                         <td>@stock.TickerSymbol</td>
                         <td>@stock.FullName</td>
-                        <td>$ @stock.CurrentPrice</td>
+                        <td>
+                            <span>$ </span>
+                            <span data-stock-price="@stock.TickerSymbol">@stock.CurrentPrice</span>
+                        </td>
                         <td>@stock.CurrentPriceDateTime</td>
                         <td>@stock.ImageSrcUrl</td>
                         <td>

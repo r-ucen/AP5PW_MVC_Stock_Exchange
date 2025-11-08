@@ -14,17 +14,18 @@
 
     <dl>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CurrentPrice)
+            @Model.FullName
         </dt>
 
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CurrentPrice)
+            <span>$ </span>
+            <span data-stock-price="@Model.TickerSymbol">@Model.CurrentPrice</span>
+        </dd>
     </dl>
 
     <form asp-action="Delete" method="post">
         <input type="hidden" asp-for="Id" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-action="Select" class="btn btn-secondary">Cancel</a>
-
     </form>
 </div>
