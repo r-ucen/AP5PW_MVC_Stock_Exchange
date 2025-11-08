@@ -50,6 +50,8 @@ builder.Services.AddScoped<IStockAppService, StockAppService>();
 builder.Services.AddScoped<ITransactionAppService, TransactionAppService>();
 builder.Services.AddScoped<IAccountService, AccountIdentityService>();
 builder.Services.AddScoped<IOrderAppService, OrderAppService>();
+builder.Services.AddScoped<IPortfolioAppService, PortfolioAppService>();
+builder.Services.AddScoped<IPortfolioStockAppService, PortfolioStockAppService>();
 
 var app = builder.Build();
 

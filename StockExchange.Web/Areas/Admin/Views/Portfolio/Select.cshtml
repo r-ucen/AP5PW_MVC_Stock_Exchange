@@ -1,0 +1,37 @@
+﻿@model IList<Portfolio>
+
+@{
+    ViewData["Title"] = "Portfolio Administration";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@{
+    if (Model != null && Model.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">@nameof(Portfolio.Id)</th>
+                        <th scope="col">@nameof(Portfolio.Deposits)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var portfolio in Model)
+                    {
+                        <tr>
+                            <th scope="row">@portfolio.Id</th>
+                            <td>@portfolio.Deposits</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>Portfolios table is empty</p>
+    }
+}
