@@ -30,6 +30,15 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     OrderType = "Buy",
                     Quantity = 5,
                     CreatedDate = new DateTime(2025, 11, 2, 22, 58, 40)
+                },
+                new Order
+                {
+                    Id = 3,
+                    UserId = 1, // admin
+                    StockId = 2, // Microfoft
+                    OrderType = "Buy",
+                    Quantity = 8,
+                    CreatedDate = new DateTime(2025, 11, 2, 22, 58, 40)
                 }
             };
         }

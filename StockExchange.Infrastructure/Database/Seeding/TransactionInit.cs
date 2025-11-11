@@ -34,6 +34,17 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     Quantity = 5,
                     Price = 275.50m,
                     TransactionDate = new DateTime(2025, 11, 2, 22, 58, 40)
+                },
+                new Transaction
+                {
+                    Id = 3,
+                    UserId = 1, // admin
+                    StockId = 2, // Microfoft
+                    OrderId = 3,
+                    TransactionType = "Buy",
+                    Quantity = 8,
+                    Price = 395.00m,
+                    TransactionDate = new DateTime(2025, 11, 2, 22, 58, 40)
                 }
             };
         }
