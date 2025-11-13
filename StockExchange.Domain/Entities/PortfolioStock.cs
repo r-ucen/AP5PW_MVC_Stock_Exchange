@@ -19,11 +19,10 @@ namespace StockExchange.Domain.Entities
         public int StockId { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18, 4)")]
-        public decimal Quantity { get; set; }
+        public int Quantity { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18, 2)")]
+        [Column(TypeName = "decimal(18, 4)")]
         public decimal AvgPurchasePrice { get; set; }
 
         // Navigation properties

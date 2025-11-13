@@ -22,7 +22,7 @@ namespace StockExchange.Domain.Entities
         public string FullName { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18, 2)")]
+        [Column(TypeName = "decimal(18, 4)")]
         public decimal CurrentPrice { get; set; }
 
         [StringLength(1024)]
