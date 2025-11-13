@@ -1,5 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.SignalR;
+using StockExchange.Application.Abstraction;
+using StockExchange.Application.ViewModels;
 using StockExchange.Infrastructure.Database;
 using StockExchange.Web.Hubs;
 
@@ -23,8 +25,12 @@ namespace StockExchange.Web.Services
                 {
                     var dbContext = scope.ServiceProvider.GetRequiredService<StockExchangeDbContext>();
                     var hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<StockHub>>();
+                    var portfolioAppService = scope.ServiceProvider.GetRequiredService<IPortfolioAppService>();
 
                     var stocks = dbContext.Stocks.ToList();
+
+                    // send portfolio update only to these users
+                    var sendToUsers = new HashSet<int>();
 
                     foreach (var stock in stocks)
                     {
@@ -43,6 +49,40 @@ namespace StockExchange.Web.Services
                                     stoppingToken
                                 );
                         }
+
+                        /*
+                        
+                        SELECT distinct(UserId) FROM portfoliostock
+                        INNER JOIN portfolio
+                        ON portfoliostock.PortfolioId = portfolio.Id
+
+                        */
+
+                        var holders = (from ps in dbContext.PortfolioStocks
+                                       join p in dbContext.Portfolios
+                                       on ps.PortfolioId equals p.Id
+                                       select p.UserId).Distinct().ToList();
+
+                        foreach (var holderId in holders)
+                        {
+                            sendToUsers.Add(holderId);
+                        }
+                    }
+
+                    foreach (var userId in sendToUsers)
+                    {
+                        var summary = await portfolioAppService.GetSummaryAsync(userId);
+                        await hubContext.Clients.User(userId.ToString())
+                            .SendAsync("RecievePortfolioSummaryUpdate",
+                            new PortfolioSummaryViewModel
+                            {
+                                Title = summary.Title,
+                                PortfolioValue = summary.PortfolioValue,
+                                UnrealizedGains = summary.UnrealizedGains,
+                                UnrealizedGainPercentage = summary.UnrealizedGainPercentage,
+                                AvailableCash = summary.AvailableCash,
+                                Deposits = summary.Deposits
+                            }, stoppingToken);
                     }
 
                     await Task.Delay(TimeSpan.FromSeconds(2), stoppingToken);

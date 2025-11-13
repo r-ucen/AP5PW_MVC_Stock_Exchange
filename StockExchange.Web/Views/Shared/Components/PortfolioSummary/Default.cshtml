@@ -1,0 +1,39 @@
+﻿@model PortfolioSummaryViewModel
+
+<aside class="portfolio-summary card p-3 shadow-sm">
+
+    <h2 class="mb-4">@Model.Title</h2>
+
+    <div class="summary-block mb-3">
+        <div class="fs-3 fw-semibold">
+            $ <span data-portfolio-value>@Model.PortfolioValue.ToString("N2")</span>
+        </div>
+    </div>
+
+    <div class="summary-block mb-4">
+        <div class="text-muted small">Unrealized Gain</div>
+        @{
+            var gainClass = Model.UnrealizedGains >= 0 ? "text-success" : "text-danger";
+
+            if (Model.UnrealizedGains == 0)
+            {
+                gainClass = "text-white";
+            }
+        }
+        <div class="@gainClass fw-semibold" gains-painter>
+            $ <span data-unrealized-gains>@Model.UnrealizedGains.ToString("N2")</span>
+            (<span data-unrealized-gains-pct>@Model.UnrealizedGainPercentage.ToString("P2")</span> %)
+        </div>
+    </div>
+
+    <div class="summary-block mb-3 d-flex justify-content-between">
+        <span class="text-muted">Available Cash</span>
+        <span class="fw-medium">$ <span data-available-cash>@Model.AvailableCash.ToString("N2")</span></span>
+    </div>
+
+    <div class="summary-block d-flex justify-content-between">
+        <span class="text-muted">Deposits</span>
+        <span class="fw-medium">$ <span data-deposits>@Model.Deposits.ToString("N2")</span></span>
+    </div>
+
+</aside>

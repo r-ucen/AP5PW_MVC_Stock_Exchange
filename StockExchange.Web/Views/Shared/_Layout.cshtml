@@ -34,6 +34,18 @@
                             <li>
                                 <a class="nav-link text-dark" asp-area="Customer">Portfolio</a>
                             </li>
+
+                            <li>
+                                <a class="nav-link text-dark" asp-area="Customer">Discover</a>
+                            </li>
+
+                            <li>
+                                <a class="nav-link text-dark" asp-area="Customer">Transactions</a>
+                            </li>
+
+                            <li>
+                                <a class="nav-link text-dark" asp-area="Customer">Deposit/Withdraw</a>
+                            </li>
                         }
                             
                         @if (User.Identity.IsAuthenticated && (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.Manager))))
