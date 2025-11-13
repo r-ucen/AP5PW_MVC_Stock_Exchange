@@ -34,7 +34,7 @@
                             <td>@transaction.OrderId</td>
                             <td>@transaction.TransactionType</td>
                             <td>@transaction.Quantity</td>
-                            <td>@transaction.Price</td>
+                            <td>@transaction.Price.ToString("N2")</td>
                             <td>@transaction.TransactionDate</td>
                         </tr>
                     }
