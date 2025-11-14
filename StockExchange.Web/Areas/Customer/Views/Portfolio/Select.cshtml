@@ -29,23 +29,23 @@
                         gainClass = "text-white";
                     }
 
-                    <div class="list-group-item holding-row">
+                    <div class="list-group-item holding-row" data-stock-id="@holding.StockId">
                         <div class="me-3">
                             <div class="fw-semibold">@holding.FullName</div>
                             <div>@holding.TickerSymbol</div>
-                            <small>@holding.Quantity</small>
+                            <small data-holding-quantity>@holding.Quantity</small>
                         </div>
 
                         <div>
-                            <div>$ <span>@holding.TotalValue.ToString("N2")</span></div>
-                            <div class="@gainClass">
-                                $ <span>@holding.GainLoss.ToString("N2")</span>
-                                (<span>@holding.GainLossPercentage.ToString("N2")</span> %)
+                            <div>$ <span data-holding-total-value>@holding.TotalValue.ToString("N2")</span></div>
+                            <div class="@gainClass" data-gain-loss-painter>
+                                $ <span data-holding-gain-loss>@holding.GainLoss.ToString("N2")</span>
+                                (<span data-holding-gain-loss-pct>@holding.GainLossPercentage.ToString("N2")</span> %)
                             </div>
                         </div>
 
                         <div>
-                            $ <span>@holding.CurrentPrice.ToString("N2")</span>
+                            $ <span data-stock-price="@holding.TickerSymbol" data-holding-current-price>@holding.CurrentPrice.ToString("N2")</span>
                         </div>
 
                         <div>

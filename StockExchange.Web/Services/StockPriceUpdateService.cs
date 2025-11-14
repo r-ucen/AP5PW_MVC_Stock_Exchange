@@ -73,7 +73,7 @@ namespace StockExchange.Web.Services
                     {
                         var summary = await portfolioAppService.GetSummaryAsync(userId);
                         await hubContext.Clients.User(userId.ToString())
-                            .SendAsync("RecievePortfolioSummaryUpdate",
+                            .SendAsync("ReceivePortfolioSummaryUpdate",
                             new PortfolioSummaryViewModel
                             {
                                 Title = summary.Title,
@@ -83,6 +83,14 @@ namespace StockExchange.Web.Services
                                 AvailableCash = summary.AvailableCash,
                                 Deposits = summary.Deposits
                             }, stoppingToken);
+                    }
+
+                    foreach (var userId in sendToUsers)
+                    {
+                        var holdings = await portfolioAppService.GetPortfolioHoldingsAsync(userId);
+                        await hubContext.Clients.User(userId.ToString())
+                            .SendAsync("ReceivePortfolioHoldingsUpdate",
+                            holdings, stoppingToken);
                     }
 
                     await Task.Delay(TimeSpan.FromSeconds(2), stoppingToken);
