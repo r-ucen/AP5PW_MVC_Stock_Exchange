@@ -24,10 +24,8 @@
             </thead>
 
             <tbody>
-                @for (int i = 0; i < Model.Count; i++)
+                @foreach (var stock in Model)
                 {
-                    Stock stock = Model[i];
-
                     <tr>
                         <th scope="row">@stock.Id</th>
                         <td>@stock.TickerSymbol</td>
