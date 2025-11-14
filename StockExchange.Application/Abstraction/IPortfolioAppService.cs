@@ -11,6 +11,7 @@ namespace StockExchange.Application.Abstraction
     public interface IPortfolioAppService
     {
         IList<Portfolio> Select();
+        public Task<IList<PortfolioHoldingViewModel>> GetPortfolioHoldingsAsync(int userId);
         Task<PortfolioSummaryViewModel> GetSummaryAsync(int userId);
     }
 }

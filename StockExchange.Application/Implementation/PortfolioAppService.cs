@@ -23,6 +23,54 @@ namespace StockExchange.Application.Implementation
         {
             return _stockExchangeDbContext.Portfolios.ToList();
         }
+
+        public async Task<IList<PortfolioHoldingViewModel>> GetPortfolioHoldingsAsync(int userId)
+        {
+            // SELECT * FROM portfolio WHERE UserId = userId LIMIT 1;
+
+            var portfolio = _stockExchangeDbContext.Portfolios
+                .Where(p => p.UserId == userId)
+                .AsNoTracking()
+                .SingleOrDefault();
+
+            if (portfolio == null)
+            {
+                return [];
+            }
+
+            /*
+            
+            SELECT
+	            stock.Id AS StockId,
+                stock.TickerSymbol,
+                stock.FullName,
+                portfoliostock.Quantity,
+                stock.CurrentPrice,
+                portfoliostock.AvgPurchasePrice
+            FROM
+                portfoliostock
+            INNER JOIN stock
+                on portfoliostock.StockId = stock.Id
+            WHERE portfoliostock.PortfolioId = portfolio.Id;
+
+            */
+
+            var holdings = await (from ps in _stockExchangeDbContext.PortfolioStocks.AsNoTracking()
+                                  join s in _stockExchangeDbContext.Stocks.AsNoTracking() on ps.StockId equals s.Id
+                                  where ps.PortfolioId == portfolio.Id
+                                  select new PortfolioHoldingViewModel
+                                  {
+                                      StockId = s.Id,
+                                      TickerSymbol = s.TickerSymbol,
+                                      FullName = s.FullName,
+                                      Quantity = ps.Quantity,
+                                      CurrentPrice = s.CurrentPrice,
+                                      AvgPurchasePrice = ps.AvgPurchasePrice
+                                  }).ToListAsync();
+
+            return holdings;
+        }
+
         public async Task<PortfolioSummaryViewModel> GetSummaryAsync(int userId)
         {
             // SELECT * FROM portfolio WHERE UserId = userId LIMIT 1;
