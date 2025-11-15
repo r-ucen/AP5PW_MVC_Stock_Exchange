@@ -48,7 +48,7 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var stock = _stockAppService.Select().FirstOrDefault(s => s.Id == id);
+            var stock = _stockAppService.Select(id);
             if (stock != null)
             {
                 return View(stock);
