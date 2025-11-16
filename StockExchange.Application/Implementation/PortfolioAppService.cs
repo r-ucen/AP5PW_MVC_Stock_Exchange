@@ -306,5 +306,83 @@ namespace StockExchange.Application.Implementation
                 throw;
             }
         }
+
+        public async Task SellStockAsync(int userId, TradeViewModel viewModel)
+        {
+            await using var dbTransaction = await _stockExchangeDbContext.Database.BeginTransactionAsync();
+
+            try
+            {
+                var tradeData = await GetBuySellTradeDataAsync(userId, viewModel.StockId);
+
+                var order = new Order
+                {
+                    UserId = userId,
+                    StockId = viewModel.StockId,
+                    OrderType = "SELL",
+                    Quantity = viewModel.Quantity,
+                    CreatedDate = DateTime.UtcNow
+                };
+
+                await _stockExchangeDbContext.Orders.AddAsync(order);
+                await _stockExchangeDbContext.SaveChangesAsync();
+
+                var userTransaction = new Transaction
+                {
+                    UserId = userId,
+                    StockId = viewModel.StockId,
+                    OrderId = order.Id,
+                    TransactionType = "SELL",
+                    Quantity = viewModel.Quantity,
+                    Price = tradeData.CurrentPrice,
+                    TransactionDate = DateTime.UtcNow
+                };
+
+                await _stockExchangeDbContext.Transactions.AddAsync(userTransaction);
+
+                var portfolio = await _stockExchangeDbContext.Portfolios
+                    .Where(p => p.UserId == userId)
+                    .SingleOrDefaultAsync();
+
+                if (portfolio == null) throw new InvalidOperationException("Portfolio not found.");
+
+                var portfolioStock = await _stockExchangeDbContext.PortfolioStocks
+                    .Where(
+                        ps => ps.PortfolioId == portfolio.Id
+                        && ps.StockId == viewModel.StockId
+                    )
+                    .SingleOrDefaultAsync();
+
+                if (portfolioStock != null)
+                {
+                    if (portfolioStock.Quantity < viewModel.Quantity)
+                    {
+                        throw new Exception("You don't own that many shares.");
+                    }
+                    else if (portfolioStock.Quantity == viewModel.Quantity)
+                    {
+                        _stockExchangeDbContext.PortfolioStocks.Remove(portfolioStock);
+                    }
+                    else
+                    {
+                        portfolioStock.Quantity -= viewModel.Quantity;
+                    }
+                } else
+                {
+                    await dbTransaction.RollbackAsync();
+                    throw new Exception("Invalid stock.");
+                }
+
+
+                await _stockExchangeDbContext.SaveChangesAsync();
+                await dbTransaction.CommitAsync();
+
+            }
+            catch (Exception)
+            {
+                await dbTransaction.RollbackAsync();
+                throw;
+            }
+        }
     }
 }

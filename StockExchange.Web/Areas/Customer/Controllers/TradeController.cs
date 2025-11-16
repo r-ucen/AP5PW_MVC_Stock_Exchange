@@ -56,15 +56,60 @@ namespace StockExchange.Web.Areas.Customer.Controllers
                 return View(data);
             }
 
-            try {
+            try
+            {
                 await _portfolioAppService.BuyStockAsync(uId, viewModel);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 ModelState.AddModelError(string.Empty, ex.Message);
                 var data = await _portfolioAppService.GetBuySellTradeDataAsync(uId, viewModel.StockId);
                 data.Quantity = viewModel.Quantity;
                 return View(data);
             }
             return RedirectToAction("Select", "Portfolio");
-        } 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Sell(int stockId)
+        {
+            var claimsPrincipal = User as ClaimsPrincipal;
+            var userId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userId, out var uId))
+            {
+                return View(new PortfolioHoldingViewModel());
+            }
+            var data = await _portfolioAppService.GetBuySellTradeDataAsync(uId, stockId);
+            return View(data);
+        }
+
+        [HttpPost, ActionName("Sell")]
+        public async Task<IActionResult> SellConfirmed(TradeViewModel viewModel)
+        {
+            var claimsPrincipal = User as ClaimsPrincipal;
+            var userId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userId, out var uId))
+            {
+                return View(new PortfolioHoldingViewModel());
+            }
+            if (!ModelState.IsValid)
+            {
+                var data = await _portfolioAppService.GetBuySellTradeDataAsync(uId, viewModel.StockId);
+                data.Quantity = viewModel.Quantity;
+                return View(data);
+            }
+            try
+            {
+                await _portfolioAppService.SellStockAsync(uId, viewModel);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                var data = await _portfolioAppService.GetBuySellTradeDataAsync(uId, viewModel.StockId);
+                data.Quantity = viewModel.Quantity;
+                return View(data);
+            }
+            return RedirectToAction("Select", "Portfolio");
+        }
     }
 }
