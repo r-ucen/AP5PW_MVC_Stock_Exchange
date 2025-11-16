@@ -37,7 +37,7 @@ namespace StockExchange.Web.Services
                         var stockToUpdate = dbContext.Stocks.FirstOrDefault(s => s.Id == stock.Id);
                         if (stockToUpdate != null)
                         {
-                            var priceChangeRate = (decimal)((_random.NextDouble() - 0.5) * 0.01); // -0.5 % to 0.5 % 
+                            var priceChangeRate = (decimal)((_random.NextDouble() - 0.5) * 0.001); // -0.05 % to 0.05 % 
                             var newStockPrice = stockToUpdate.CurrentPrice + (stockToUpdate.CurrentPrice * priceChangeRate);
                             stockToUpdate.CurrentPrice = Math.Round(newStockPrice, 2);
 
