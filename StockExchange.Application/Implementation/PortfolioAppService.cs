@@ -28,10 +28,10 @@ namespace StockExchange.Application.Implementation
         {
             // SELECT * FROM portfolio WHERE UserId = userId LIMIT 1;
 
-            var portfolio = _stockExchangeDbContext.Portfolios
+            var portfolio = await _stockExchangeDbContext.Portfolios
                 .Where(p => p.UserId == userId)
                 .AsNoTracking()
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
 
             if (portfolio == null)
             {
@@ -75,10 +75,10 @@ namespace StockExchange.Application.Implementation
         {
             // SELECT * FROM portfolio WHERE UserId = userId LIMIT 1;
 
-            var portfolio = _stockExchangeDbContext.Portfolios
+            var portfolio = await _stockExchangeDbContext.Portfolios
                 .Where(p => p.UserId == userId)
                 .AsNoTracking()
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
 
             if (portfolio == null)
             {
@@ -174,26 +174,27 @@ namespace StockExchange.Application.Implementation
         public async Task<TradeViewModel> GetBuySellTradeDataAsync(int userId, int stockId)
         {
 
-            var stock = _stockExchangeDbContext.Stocks
+            var stock = await _stockExchangeDbContext.Stocks
                 .Where(s => s.Id == stockId)
                 .AsNoTracking()
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
 
-            var portfolio = _stockExchangeDbContext.Portfolios
+            var portfolio = await _stockExchangeDbContext.Portfolios
                 .Where(p => p.UserId == userId)
                 .AsNoTracking()
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
 
             if (stock == null || portfolio == null)
             {
                 return new TradeViewModel();
             }
 
-            var quantityOwned = _stockExchangeDbContext.PortfolioStocks.AsNoTracking()
+            var quantityOwned = await _stockExchangeDbContext.PortfolioStocks
+                .AsNoTracking()
                 .Where(ps => ps.PortfolioId == portfolio.Id)
                 .Where(ps => ps.StockId == stockId)
                 .Select(ps => ps.Quantity)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             var buys = await _stockExchangeDbContext.Transactions
                 .AsNoTracking()
@@ -292,12 +293,13 @@ namespace StockExchange.Application.Implementation
                         AvgPurchasePrice = tradeData.CurrentPrice
                     };
 
-                    _stockExchangeDbContext.PortfolioStocks.Add(portfolioStock);
+                    await _stockExchangeDbContext.PortfolioStocks.AddAsync(portfolioStock);
                 }
 
 
                 await _stockExchangeDbContext.SaveChangesAsync();
                 await dbTransaction.CommitAsync();
+
             } catch (Exception)
             {
                 await dbTransaction.RollbackAsync();
