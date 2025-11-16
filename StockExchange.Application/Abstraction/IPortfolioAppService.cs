@@ -13,5 +13,7 @@ namespace StockExchange.Application.Abstraction
         IList<Portfolio> Select();
         public Task<IList<PortfolioHoldingViewModel>> GetPortfolioHoldingsAsync(int userId);
         Task<PortfolioSummaryViewModel> GetSummaryAsync(int userId);
+        public Task<TradeViewModel> GetBuySellTradeDataAsync(int userId, int stockId);
+        public Task BuyStockAsync(int userId, TradeViewModel viewModel);
     }
 }

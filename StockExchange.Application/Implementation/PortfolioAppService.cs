@@ -170,5 +170,139 @@ namespace StockExchange.Application.Implementation
                 Deposits = portfolio.Deposits
             };
         }
+
+        public async Task<TradeViewModel> GetBuySellTradeDataAsync(int userId, int stockId)
+        {
+
+            var stock = _stockExchangeDbContext.Stocks
+                .Where(s => s.Id == stockId)
+                .AsNoTracking()
+                .SingleOrDefault();
+
+            var portfolio = _stockExchangeDbContext.Portfolios
+                .Where(p => p.UserId == userId)
+                .AsNoTracking()
+                .SingleOrDefault();
+
+            if (stock == null || portfolio == null)
+            {
+                return new TradeViewModel();
+            }
+
+            var quantityOwned = _stockExchangeDbContext.PortfolioStocks.AsNoTracking()
+                .Where(ps => ps.PortfolioId == portfolio.Id)
+                .Where(ps => ps.StockId == stockId)
+                .Select(ps => ps.Quantity)
+                .FirstOrDefault();
+
+            var buys = await _stockExchangeDbContext.Transactions
+                .AsNoTracking()
+                .Where(t => t.UserId == userId && t.TransactionType == "BUY")
+                .SumAsync(t => t.Price * t.Quantity);
+
+            var sells = await _stockExchangeDbContext.Transactions
+                .AsNoTracking()
+                .Where(t => t.UserId == userId && t.TransactionType == "SELL")
+                .SumAsync(t => t.Price * t.Quantity);
+
+            var availableCash = portfolio.Deposits - buys + sells;
+
+            return new TradeViewModel
+            {
+                StockId = stock.Id,
+                TickerSymbol = stock.TickerSymbol,
+                FullName = stock.FullName,
+                CurrentPrice = stock.CurrentPrice,
+                AvailableCash = availableCash,
+                QuantityOwned = quantityOwned,
+                Quantity = 1
+            };
+        }
+
+        public async Task BuyStockAsync(int userId, TradeViewModel viewModel)
+        {
+            await using var dbTransaction = await _stockExchangeDbContext.Database.BeginTransactionAsync();
+
+            try
+            {
+                var tradeData = await GetBuySellTradeDataAsync(userId, viewModel.StockId);
+                var totalCost = tradeData.CurrentPrice * viewModel.Quantity;
+
+                if (tradeData.AvailableCash < totalCost)
+                {
+                    throw new Exception("Insufficient funds to complete the purchase.");
+                }
+
+                var order = new Order
+                {
+                    UserId = userId,
+                    StockId = viewModel.StockId,
+                    OrderType = "BUY",
+                    Quantity = viewModel.Quantity,
+                    CreatedDate = DateTime.UtcNow
+                };
+
+                await _stockExchangeDbContext.Orders.AddAsync(order);
+                await _stockExchangeDbContext.SaveChangesAsync();
+
+                var userTransaction = new Transaction
+                {
+                    UserId = userId,
+                    StockId = viewModel.StockId,
+                    OrderId = order.Id,
+                    TransactionType = "BUY",
+                    Quantity = viewModel.Quantity,
+                    Price = tradeData.CurrentPrice,
+                    TransactionDate = DateTime.UtcNow
+                };
+
+                await _stockExchangeDbContext.Transactions.AddAsync(userTransaction);
+
+                // find out whether the user is buying more of a stock or buying it for the first time
+                var portfolio = await _stockExchangeDbContext.Portfolios
+                    .Where(p => p.UserId == userId)
+                    .SingleOrDefaultAsync();
+
+                if (portfolio == null) throw new InvalidOperationException("Portfolio not found.");
+
+                var portfolioStock = await _stockExchangeDbContext.PortfolioStocks
+                    .Where(
+                        ps => ps.PortfolioId == portfolio.Id
+                        && ps.StockId == viewModel.StockId
+                    )
+                    .SingleOrDefaultAsync();
+
+                if (portfolioStock != null)
+                {
+                    var totalQuantity = portfolioStock.Quantity + viewModel.Quantity;
+                    
+                    var oldTotalValue = portfolioStock.Quantity * portfolioStock.AvgPurchasePrice;
+                    var boughtValue = viewModel.Quantity * tradeData.CurrentPrice;
+
+                    portfolioStock.AvgPurchasePrice = (oldTotalValue + boughtValue) / totalQuantity;
+                    portfolioStock.Quantity = totalQuantity;
+                }
+                else
+                {
+                    portfolioStock = new PortfolioStock
+                    {
+                        PortfolioId = portfolio.Id,
+                        StockId = viewModel.StockId,
+                        Quantity = viewModel.Quantity,
+                        AvgPurchasePrice = tradeData.CurrentPrice
+                    };
+
+                    _stockExchangeDbContext.PortfolioStocks.Add(portfolioStock);
+                }
+
+
+                await _stockExchangeDbContext.SaveChangesAsync();
+                await dbTransaction.CommitAsync();
+            } catch (Exception)
+            {
+                await dbTransaction.RollbackAsync();
+                throw;
+            }
+        }
     }
 }

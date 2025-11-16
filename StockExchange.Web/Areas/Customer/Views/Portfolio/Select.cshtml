@@ -49,8 +49,8 @@
                         </div>
 
                         <div>
-                            <button class="btn btn-primary">Buy more</button>
-                            <button class="btn btn-secondary">Sell</button>
+                            <a class="btn btn-primary" asp-area="Customer" asp-controller="Trade" asp-action="Buy" asp-route-stockId="@holding.StockId">Buy more</a>
+                            <a class="btn btn-secondary">Sell</a>
                         </div>
                     </div>
                 }
