@@ -29,7 +29,7 @@ connection.on("ReceivePortfolioSummaryUpdate", summary => {
 
         if (gainsPainter) {
             gainsPainter.classList.toggle("text-success", summary.unrealizedGains > 0);
-            gainsPainter.classList.toggle("text-white", summary.unrealizedGains === 0);
+            gainsPainter.classList.toggle("text-muted", summary.unrealizedGains === 0);
             gainsPainter.classList.toggle("text-danger", summary.unrealizedGains < 0);
         }
     });
@@ -46,47 +46,6 @@ connection.on("ReceivePortfolioSummaryUpdate", summary => {
         element.textContent = summary.deposits.toFixed(2);
     })
 });
-/*
-connection.on("ReceivePortfolioHoldingsUpdate", holdings => {
-    if (!Array.isArray(holdings)) return;
-
-    holdings.forEach(holding => {
-
-        const root = document.querySelector(`[data-stock-id="${holding.stockId}"]`);
-        if (!root) return;
-        const quantityElements = root.querySelectorAll("[data-holding-quantity]");
-        const totalValueElements = root.querySelectorAll("[data-holding-total-value]");
-        const gainLossElements = root.querySelectorAll("[data-holding-gain-loss]");
-        const gainLossPctElements = root.querySelectorAll("[data-holding-gain-loss-pct]");
-        const currentPriceElements = root.querySelectorAll("[data-holding-current-price]");
-
-        quantityElements.forEach(element => {
-            element.textContent = holding.quantity;
-        });
-
-        totalValueElements.forEach(element => {
-            element.textContent = holding.totalValue.toFixed(2);
-        });
-
-        gainLossElements.forEach(element => {
-            element.textContent = holding.gainLoss.toFixed(2);
-        });
-
-        gainLossPctElements.forEach(element => {
-            element.textContent = holding.gainLossPercentage.toFixed(2);
-
-            gainLossPainterEl.classList.toggle("text-success", holding.gainLoss > 0);
-            gainLossPainterEl.classList.toggle("text-muted", holding.gainLoss === 0);
-            gainLossPainterEl.classList.toggle("text-danger", holding.gainLoss < 0);
-        
-        });
-
-        currentPriceElements.forEach(element => {
-            element.textContent = holding.currentPrice.toFixed(2);
-        });
-    });
-})
-*/
 
 connection.on("ReceivePortfolioHoldingsUpdate", holdings => {
     if (!Array.isArray(holdings)) return;
