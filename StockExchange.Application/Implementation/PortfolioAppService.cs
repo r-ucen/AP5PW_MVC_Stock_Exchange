@@ -222,6 +222,14 @@ namespace StockExchange.Application.Implementation
 
         public async Task BuyStockAsync(int userId, TradeViewModel viewModel)
         {
+            /*
+            DayOfWeek day = DateTime.Now.DayOfWeek;
+            if ((day == DayOfWeek.Saturday) || (day == DayOfWeek.Sunday))
+            {
+                throw new InvalidOperationException("Market is closed.");
+            }
+            */
+
             await using var dbTransaction = await _stockExchangeDbContext.Database.BeginTransactionAsync();
 
             try
@@ -309,6 +317,14 @@ namespace StockExchange.Application.Implementation
 
         public async Task SellStockAsync(int userId, TradeViewModel viewModel)
         {
+            /*
+            DayOfWeek day = DateTime.Now.DayOfWeek;
+            if ((day == DayOfWeek.Saturday) || (day == DayOfWeek.Sunday))
+            {
+                throw new InvalidOperationException("Market is closed.");
+            }
+            */
+
             await using var dbTransaction = await _stockExchangeDbContext.Database.BeginTransactionAsync();
 
             try
