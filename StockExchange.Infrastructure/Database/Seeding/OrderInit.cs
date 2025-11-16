@@ -18,7 +18,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     Id = 1,
                     UserId = 1, // admin
                     StockId = 1, // Apple
-                    OrderType = "Buy",
+                    OrderType = "BUY",
                     Quantity = 10,
                     CreatedDate = new DateTime(2025, 11, 2, 22, 58, 40)
                 },
@@ -27,7 +27,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     Id = 2,
                     UserId = 2, // manager
                     StockId = 3, // Google
-                    OrderType = "Buy",
+                    OrderType = "BUY",
                     Quantity = 5,
                     CreatedDate = new DateTime(2025, 11, 2, 22, 58, 40)
                 },
@@ -36,7 +36,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     Id = 3,
                     UserId = 1, // admin
                     StockId = 2, // Microfoft
-                    OrderType = "Buy",
+                    OrderType = "BUY",
                     Quantity = 8,
                     CreatedDate = new DateTime(2025, 11, 2, 22, 58, 40)
                 }

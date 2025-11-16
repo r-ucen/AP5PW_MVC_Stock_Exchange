@@ -19,7 +19,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     UserId = 1, // admin
                     StockId = 1, // Apple
                     OrderId = 1,
-                    TransactionType = "Buy",
+                    TransactionType = "BUY",
                     Quantity = 10,
                     Price = 170.00m,
                     TransactionDate = new DateTime(2025, 11, 2, 22, 58, 40)
@@ -30,7 +30,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     UserId = 2, // manager
                     StockId = 3, // Google
                     OrderId = 2,
-                    TransactionType = "Buy",
+                    TransactionType = "BUY",
                     Quantity = 5,
                     Price = 275.50m,
                     TransactionDate = new DateTime(2025, 11, 2, 22, 58, 40)
@@ -41,7 +41,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     UserId = 1, // admin
                     StockId = 2, // Microfoft
                     OrderId = 3,
-                    TransactionType = "Buy",
+                    TransactionType = "BUY",
                     Quantity = 8,
                     Price = 395.00m,
                     TransactionDate = new DateTime(2025, 11, 2, 22, 58, 40)
