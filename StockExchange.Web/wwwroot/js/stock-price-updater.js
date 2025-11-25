@@ -29,7 +29,8 @@ connection.on("ReceivePortfolioSummaryUpdate", summary => {
 
         if (gainsPainter) {
             gainsPainter.classList.toggle("text-success", summary.unrealizedGains > 0);
-            gainsPainter.classList.toggle("text-muted", summary.unrealizedGains === 0);
+            gainsPainter.classList.toggle("text-muted", summary.unrealizedGains
+                == 0);
             gainsPainter.classList.toggle("text-danger", summary.unrealizedGains < 0);
         }
     });
@@ -69,7 +70,7 @@ connection.on("ReceivePortfolioHoldingsUpdate", holdings => {
 
         if (gainLossPainterEl) {
             gainLossPainterEl.classList.toggle("text-success", holding.gainLoss > 0);
-            gainLossPainterEl.classList.toggle("text-muted", holding.gainLoss === 0);
+            gainLossPainterEl.classList.toggle("text-muted", holding.gainLoss == 0);
             gainLossPainterEl.classList.toggle("text-danger", holding.gainLoss < 0);
         }
     });

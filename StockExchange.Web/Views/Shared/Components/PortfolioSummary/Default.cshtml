@@ -2,11 +2,11 @@
 
 <aside class="portfolio-summary card p-3 shadow-sm">
 
-    <h2 class="mb-4">@Model.Title</h2>
+    <h2 class="mb-4">@(Model.Title)</h2>
 
     <div class="summary-block mb-3">
         <div class="fs-3 fw-semibold">
-            $ <span data-portfolio-value>@Model.PortfolioValue.ToString("N2")</span>
+            $ <span data-portfolio-value>@(Model.PortfolioValue.ToString("N2"))</span>
         </div>
     </div>
 
@@ -17,23 +17,23 @@
 
             if (Model.UnrealizedGains == 0)
             {
-                gainClass = "text-white";
+                gainClass = "text-muted";
             }
         }
         <div class="@gainClass fw-semibold" gains-painter>
-            $ <span data-unrealized-gains>@Model.UnrealizedGains.ToString("N2")</span>
-            (<span data-unrealized-gains-pct>@Model.UnrealizedGainPercentage.ToString("N2")</span> %)
+            $ <span data-unrealized-gains>@(Model.UnrealizedGains.ToString("N2"))</span>
+            (<span data-unrealized-gains-pct>@(Model.UnrealizedGainPercentage.ToString("N2"))</span> %)
         </div>
     </div>
 
     <div class="summary-block mb-3 d-flex justify-content-between">
         <span class="text-muted">Available Cash</span>
-        <span class="fw-medium">$ <span data-available-cash>@Model.AvailableCash.ToString("N2")</span></span>
+        <span class="fw-medium">$ <span data-available-cash>@(Model.AvailableCash.ToString("N2"))</span></span>
     </div>
 
     <div class="summary-block d-flex justify-content-between">
         <span class="text-muted">Deposits</span>
-        <span class="fw-medium">$ <span data-deposits>@Model.Deposits.ToString("N2")</span></span>
+        <span class="fw-medium">$ <span data-deposits>@(Model.Deposits.ToString("N2"))</span></span>
     </div>
 
 </aside>

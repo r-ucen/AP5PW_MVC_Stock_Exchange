@@ -1,0 +1,45 @@
+﻿@model IList<Stock>
+
+
+@{
+    ViewData["Title"] = "Discover";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        @await Component.InvokeAsync("PortfolioSummary")
+    </div>
+
+    <div class="col-md-8">
+
+        @if (Model.Count == 0)
+        {
+            <div class="alert alert-secondary">No available stock</div>
+        }
+        else
+        {
+            <div class="list-group">
+                @foreach (var holding in Model)
+                {
+
+                    <div class="list-group-item holding-row" data-stock-id="@holding.Id">
+                        <div class="me-3">
+                            <div class="fw-semibold">@holding.FullName</div>
+                            <div>@holding.TickerSymbol</div>
+                        </div>
+
+                        <div>
+                            $ <span data-stock-price="@holding.TickerSymbol" data-holding-current-price>@holding.CurrentPrice.ToString("N2")</span>
+                        </div>
+
+                        <div>
+                            <a class="btn btn-primary" asp-area="Customer" asp-controller="Trade" asp-action="Buy" asp-route-stockId="@holding.Id">Buy</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

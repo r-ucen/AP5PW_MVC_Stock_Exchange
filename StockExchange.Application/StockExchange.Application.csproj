@@ -15,4 +15,8 @@
     <ProjectReference Include="..\StockExchange.Infrastructure\StockExchange.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
 </Project>
