@@ -30,7 +30,7 @@ body {
   text-align: start;
 }
 
-.holding-row {
+.holding-row, transaction-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr auto;
     align-items: center;
