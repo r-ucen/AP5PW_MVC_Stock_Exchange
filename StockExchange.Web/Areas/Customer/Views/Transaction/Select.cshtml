@@ -33,7 +33,16 @@
                                 <span class="badge bg-danger">Sold </span>
                             }
                             <span>@(transaction.Quantity)</span>
-                             Shares Of 
+
+                            @if (transaction.Quantity == 1)
+                            {
+                               <span>Share </span>
+                            } else
+                            {
+                                <span>Shares </span>
+                            }
+
+                            <span>Of </span>
                             <span class="fw-semibold">@(transaction.FullName)</span>
                              (<span>@(transaction.TickerSymbol)</span>)
                             at $ <span>@(transaction.Price.ToString("N2"))</span>
