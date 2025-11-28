@@ -284,7 +284,7 @@ namespace StockExchange.Application.Implementation
                 if (portfolioStock != null)
                 {
                     var totalQuantity = portfolioStock.Quantity + viewModel.Quantity;
-                    
+
                     var oldTotalValue = portfolioStock.Quantity * portfolioStock.AvgPurchasePrice;
                     var boughtValue = viewModel.Quantity * tradeData.CurrentPrice;
 
@@ -308,7 +308,8 @@ namespace StockExchange.Application.Implementation
                 await _stockExchangeDbContext.SaveChangesAsync();
                 await dbTransaction.CommitAsync();
 
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 await dbTransaction.RollbackAsync();
                 throw;
@@ -383,7 +384,8 @@ namespace StockExchange.Application.Implementation
                     {
                         portfolioStock.Quantity -= viewModel.Quantity;
                     }
-                } else
+                }
+                else
                 {
                     await dbTransaction.RollbackAsync();
                     throw new Exception("Invalid stock.");
@@ -397,6 +399,80 @@ namespace StockExchange.Application.Implementation
             catch (Exception)
             {
                 await dbTransaction.RollbackAsync();
+                throw;
+            }
+        }
+
+        public async Task Deposit(decimal amount, int userId)
+        {
+            try
+            {
+                var portfolio = await _stockExchangeDbContext.Portfolios
+                .Where(p => p.UserId == userId)
+                .SingleOrDefaultAsync();
+
+                if (portfolio == null)
+                {
+                    throw new Exception("Portfolio not found.");
+                }
+
+                if (amount < 1)
+                {
+                    throw new Exception("Deposit amount must be greater than 1.");
+                }
+
+                portfolio.Deposits += amount;
+                _stockExchangeDbContext.Portfolios.Update(portfolio);
+                await _stockExchangeDbContext.SaveChangesAsync();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task Withdraw(decimal amount, int userId)
+        {
+            try
+            {
+                var portfolio = await _stockExchangeDbContext.Portfolios
+                .Where(p => p.UserId == userId)
+                .SingleOrDefaultAsync();
+
+                var buys = await _stockExchangeDbContext.Transactions
+                    .AsNoTracking()
+                    .Where(t => t.UserId == userId && t.TransactionType == "BUY")
+                    .SumAsync(t => t.Price * t.Quantity);
+
+                var sells = await _stockExchangeDbContext.Transactions
+                    .AsNoTracking()
+                    .Where(t => t.UserId == userId && t.TransactionType == "SELL")
+                    .SumAsync(t => t.Price * t.Quantity);
+
+                var availableCash = portfolio.Deposits - buys + sells;
+
+                if (portfolio == null)
+                {
+                    throw new Exception("Portfolio not found.");
+                }
+
+                if (amount <= 0)
+                {
+                    throw new Exception("Withdrawal amount must be greater than 0.");
+                }
+
+                if (amount > availableCash)
+                {
+                    throw new Exception("Not enought funds to withdraw");
+                }
+
+                portfolio.Deposits -= amount;
+                _stockExchangeDbContext.Portfolios.Update(portfolio);
+                await _stockExchangeDbContext.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
                 throw;
             }
         }

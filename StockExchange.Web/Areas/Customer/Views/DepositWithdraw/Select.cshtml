@@ -1,0 +1,12 @@
+﻿<div class="d-flex justify-content-center align-items-center gap-4">
+
+    <div class="col-md-4 mb-4">
+        @await Component.InvokeAsync("PortfolioSummary")
+    </div>
+
+    <div class="d-flex flex-column ms-4 gap-2">
+        <a class="btn btn-lg btn-outline-primary" asp-area="Customer" asp-action="Deposit">Deposit</a>
+        <a class="btn btn-lg btn-outline-primary" asp-area="Customer" asp-action="Withdraw">Withdraw</a>
+    </div>
+
+</div>

@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "WithDraw";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="d-flex justify-content-center align-items-center gap-4">
+    <div class="col-md-4 mb-4">
+        @await Component.InvokeAsync("PortfolioSummary")
+    </div>
+
+    <div class="col-md-8">
+        <form asp-area="Customer" asp-controller="DepositWithdraw" asp-action="Withdraw" method="post" class="w-50">
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount of $ to WithDraw</label>
+                <input type="number" class="form-control" id="amount" name="amount" step="0.01" min="0.01" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Withdraw</button>
+        </form>
+    </div>
