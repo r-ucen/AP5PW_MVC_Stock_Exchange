@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace StockExchange.Web.Areas.Customer.Controllers
 {
     [Area("Customer")]
-    [Authorize(Roles = nameof(Roles.Admin) + ", " + nameof(Roles.Manager) + ", " + nameof(Roles.Customer))]
+    [Authorize(Roles = nameof(Roles.Customer))]
     public class TradeController : Controller
     {
         IPortfolioAppService _portfolioAppService;
