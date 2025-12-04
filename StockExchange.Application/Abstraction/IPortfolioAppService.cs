@@ -18,5 +18,6 @@ namespace StockExchange.Application.Abstraction
         Task SellStockAsync(int userId, TradeViewModel viewModel);
         Task Deposit(decimal amount, int userId);
         Task Withdraw(decimal amount, int userId);
+        Task CreatePortfolioAsync(int userId);
     }
 }

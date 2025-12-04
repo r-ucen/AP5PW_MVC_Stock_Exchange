@@ -462,14 +462,24 @@ namespace StockExchange.Application.Implementation
                     throw new Exception("Withdrawal amount must be greater than 0.");
                 }
 
-                if (amount > availableCash)
+        public async Task CreatePortfolioAsync(int userId)
+        {
+            try
                 {
-                    throw new Exception("Not enought funds to withdraw");
-                }
+                var portfolio = await _stockExchangeDbContext.Portfolios
+                .Where(p => p.UserId == userId)
+                .SingleOrDefaultAsync();
 
-                portfolio.Deposits -= amount;
-                _stockExchangeDbContext.Portfolios.Update(portfolio);
+                if (portfolio == null)
+                {
+                    var createdPortfolio = new Portfolio
+                    {
+                        UserId = userId,
+                        Deposits = 0m
+                    };
+                    await _stockExchangeDbContext.Portfolios.AddAsync(createdPortfolio);
                 await _stockExchangeDbContext.SaveChangesAsync();
+            }
             }
             catch (Exception)
             {
