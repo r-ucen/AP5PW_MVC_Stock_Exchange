@@ -15,6 +15,11 @@ namespace StockExchange.Web.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                return RedirectToAction("Select", "Portfolio", new { area = "Customer" });
+            }
+
             return View();
         }
 

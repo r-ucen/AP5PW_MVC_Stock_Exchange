@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockExchange.Domain.Validations;
+using Microsoft.AspNetCore.Http;
 
 namespace StockExchange.Domain.Entities
 {
@@ -27,6 +28,9 @@ namespace StockExchange.Domain.Entities
 
         [StringLength(1024)]
         public string? ImageSrcUrl { get; set; }
+
+        [NotMapped]
+        public IFormFile? Image { get; set; }
 
         // Navigation properties
         public ICollection<PortfolioStock> PortfolioStocks { get; set; } = new List<PortfolioStock>();

@@ -436,9 +436,19 @@ namespace StockExchange.Application.Implementation
         {
             try
             {
+                if (amount <= 0)
+                {
+                    throw new Exception("Withdrawal amount must be greater than 0.");
+                }
+
                 var portfolio = await _stockExchangeDbContext.Portfolios
                 .Where(p => p.UserId == userId)
                 .SingleOrDefaultAsync();
+
+                if (portfolio == null)
+                {
+                    throw new Exception("Portfolio not found.");
+                }
 
                 var buys = await _stockExchangeDbContext.Transactions
                     .AsNoTracking()
@@ -452,20 +462,25 @@ namespace StockExchange.Application.Implementation
 
                 var availableCash = portfolio.Deposits - buys + sells;
 
-                if (portfolio == null)
+                if (amount > availableCash)
                 {
-                    throw new Exception("Portfolio not found.");
+                    throw new Exception("Not enought funds to withdraw");
                 }
 
-                if (amount <= 0)
-                {
-                    throw new Exception("Withdrawal amount must be greater than 0.");
-                }
+                portfolio.Deposits -= amount;
+                _stockExchangeDbContext.Portfolios.Update(portfolio);
+                await _stockExchangeDbContext.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public async Task CreatePortfolioAsync(int userId)
         {
             try
-                {
+            {
                 var portfolio = await _stockExchangeDbContext.Portfolios
                 .Where(p => p.UserId == userId)
                 .SingleOrDefaultAsync();
@@ -478,8 +493,8 @@ namespace StockExchange.Application.Implementation
                         Deposits = 0m
                     };
                     await _stockExchangeDbContext.Portfolios.AddAsync(createdPortfolio);
-                await _stockExchangeDbContext.SaveChangesAsync();
-            }
+                    await _stockExchangeDbContext.SaveChangesAsync();
+                }
             }
             catch (Exception)
             {

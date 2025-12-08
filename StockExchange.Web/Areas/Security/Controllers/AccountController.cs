@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StockExchange.Application.Abstraction;
 using StockExchange.Application.ViewModels;
 using StockExchange.Infrastructure.Identity.Enums;
 using StockExchange.Web.Controllers;
+using System.Security.Claims;
 
 namespace StockExchange.Web.Areas.Security.Controllers
 {
@@ -11,9 +12,11 @@ namespace StockExchange.Web.Areas.Security.Controllers
     public class AccountController : Controller
     {
         IAccountService _accountService;
-        public AccountController(IAccountService security)
+        IPortfolioAppService _portfolioAppService;
+        public AccountController(IAccountService security, IPortfolioAppService portfolioAppService)
         {
             _accountService = security;
+            _portfolioAppService = portfolioAppService;
         }
 
         [HttpGet]
@@ -41,7 +44,15 @@ namespace StockExchange.Web.Areas.Security.Controllers
 
                     if (isLoggedIn)
                     {
-                        return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace(nameof(Controller), String.Empty), new { area = String.Empty });
+                        var claimsPrincipal = User as ClaimsPrincipal;
+                        var userId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+                        
+                        if (int.TryParse(userId, out var uId))
+                        {
+                            await _portfolioAppService.CreatePortfolioAsync(uId);
+                        }
+
+                        return RedirectToAction("Select", "Portfolio", new { area = "Customer" });
                     }
                     else
                     {
@@ -68,7 +79,7 @@ namespace StockExchange.Web.Areas.Security.Controllers
                 bool isLoggedIn = await _accountService.Login(loginVM);
                 if (isLoggedIn)
                 {
-                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace(nameof(Controller), String.Empty), new { area = String.Empty });
+                    return RedirectToAction("Select", "Portfolio", new { area = "Customer" });
                 }
 
                 loginVM.LoginFailed = true;
