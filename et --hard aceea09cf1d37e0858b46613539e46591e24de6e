@@ -1,0 +1,359 @@
+[33mcommit aceea09cf1d37e0858b46613539e46591e24de6e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Mon Dec 8 20:13:12 2025 +0100
+
+    Refactor home landing page and routes
+
+[33mcommit 10c89745763ab4bbfcbf2d912a53f4bbc717d63c[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Dec 4 15:38:42 2025 +0100
+
+    Create a porfolio for newly registered customer
+
+[33mcommit e20339c3865952a285a46c8b3f40a116db87c867[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Dec 4 15:34:50 2025 +0100
+
+    Refactor auth
+
+[33mcommit e0ed48845294d58128287597c0d39cda8dd6901b[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Dec 4 13:56:50 2025 +0100
+
+    Update Login and Register forms UI
+
+[33mcommit 84aa242d0d1954351df6f7eabb62543de37733fd[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Dec 4 12:45:55 2025 +0100
+
+    Stop tracking appsettings.json
+
+[33mcommit f06d81afbce904ff0c5e90669cca29e518b615c2[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Fri Nov 28 11:35:43 2025 +0100
+
+    Implement Deposit and Withdraw
+
+[33mcommit 85ca0a6a8d203d5154f116ca7685a02254311c5d[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Fri Nov 28 08:36:29 2025 +0100
+
+    Display "Shares" when the quantity is greater than 1
+
+[33mcommit 23dd89417e9daefaea6d1ed1ac58fdbf1278e1f8[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Tue Nov 25 17:45:27 2025 +0100
+
+    Add transactions tab
+
+[33mcommit f5729b55eaa0c97568a927a6765794e2587a8436[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Tue Nov 25 15:38:48 2025 +0100
+
+    Fix wrong color rendering
+
+[33mcommit cbb1e4ee0c6ac3a3a15a9eba4fb3365b09eb2c2a[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sun Nov 16 23:06:38 2025 +0100
+
+    Add market hours
+
+[33mcommit 318fbf6f5c555d2e740afe30ef9f9befa8bbc905[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sun Nov 16 22:55:45 2025 +0100
+
+    Add ability to sell a stock
+
+[33mcommit 9ac4710dfd357eed6867cc4d9effc4cb63e4ece9[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sun Nov 16 21:51:11 2025 +0100
+
+    Change title
+
+[33mcommit f6f188f0e3f3e5af81539af78187a7d5d9ca445a[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sun Nov 16 21:21:11 2025 +0100
+
+    Remove public modifier
+
+[33mcommit 4674a09b4999e14c21209a515eda056aeeefdf4c[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sun Nov 16 21:09:41 2025 +0100
+
+    Use asynchronous methods
+
+[33mcommit 893917204c0659addbfbce4d334e717c555674ad[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sun Nov 16 18:42:21 2025 +0100
+
+    Remove commented code & unify text-muted class usage
+
+[33mcommit 10e348f81a42d492cec62be6d10a55df22443a82[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sun Nov 16 18:14:28 2025 +0100
+
+    Tweak change percentage
+
+[33mcommit cc223072dbdb8ef1b4bdfa7db7950213610b8f38[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sun Nov 16 18:13:59 2025 +0100
+
+    Implement Ability to buy a stock & add minimum shares validation
+
+[33mcommit 8ed5b5c2a098c93661d9025598069a4291a0f714[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sun Nov 16 15:59:28 2025 +0100
+
+    Reset database & populate with new clean data
+
+[33mcommit 88b4527c60b8d830dd9363cb0cf28a83c79db539[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sun Nov 16 15:58:40 2025 +0100
+
+    Change type value from "Buy" to "BUY"
+
+[33mcommit 4603e5162147f89ed55c2090b79a99f323b8db78[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sat Nov 15 20:07:09 2025 +0100
+
+    Use Select method with id parameter
+
+[33mcommit 391a47dcdb4407eb1dcc52ce10a6f704543c3611[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Fri Nov 14 19:26:02 2025 +0100
+
+    Replace for loop with foreach loop
+
+[33mcommit c83d656e2ddeb3cb284be6dccef9d8d5553babee[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Fri Nov 14 18:45:59 2025 +0100
+
+    Update portfolio holdings using signalR
+
+[33mcommit 01d724f66d62b688eed9503c935a59377c08b7f6[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Fri Nov 14 09:53:01 2025 +0100
+
+    Add portfolio summary and holdings view to the portfolio tab
+
+[33mcommit ea96a7be5e8c0648543bba26d03bcaef4060be56[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 13 22:17:31 2025 +0100
+
+    Fix decimal display
+
+[33mcommit 47ff6c8bb5a4019f7785e8c8e329f3c898416e8d[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 13 22:01:39 2025 +0100
+
+    Use only whole shares (not fractional) and 4 decimals for stock price
+
+[33mcommit e23d307560d8388bb8aa4047d85dd9af596cd095[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 13 21:23:35 2025 +0100
+
+    Add portfolio summary component and update this component on stock price changes using signalR
+
+[33mcommit dc69404723ab7ac1030f4cb12be59b3477efd1ff[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 13 21:19:55 2025 +0100
+
+    Fix missing Order and Transaction - migration
+
+[33mcommit b3e620763bcfb4c6441f7888bd791f8ce55a4227[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Tue Nov 11 15:56:18 2025 +0100
+
+    Fix missing Order and Transaction
+
+[33mcommit cc883e63e2aecbf0f01b5cb9120ac13dce66783a[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sat Nov 8 22:46:27 2025 +0100
+
+    Add UserId column to Portfolio administration
+
+[33mcommit 037f2ed608d01ec9b3045b536499b0202a8dd32c[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sat Nov 8 22:42:28 2025 +0100
+
+    Remove CurrentPriceDateTime from Stock entity
+
+[33mcommit 2b6d507e7f7e8dd88a6bd78f4a75ee73504e721a[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sat Nov 8 22:22:17 2025 +0100
+
+    Add service to periodically update all stock's prices, and use SignalR to push those updated changes to the client
+
+[33mcommit f1496d658d943a674c772e2d25f7e209bcd791a8[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sat Nov 8 15:58:11 2025 +0100
+
+    Add Portfolio and PortfolioStock Administration
+
+[33mcommit 9bdb93f3d08d2f785295339d3d30b9cd8473a891[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 6 23:32:42 2025 +0100
+
+    Add Order administration
+
+[33mcommit 2393b0f3e7b0bf2c0dcdb0eba3b79b3def863bdb[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 6 23:11:20 2025 +0100
+
+    Fix migration to apply int foreign key, not a string one
+
+[33mcommit 3250f9f7812f10ba0308b965646fa7f5728c357e[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 6 23:00:11 2025 +0100
+
+    Fix id of the second fortfolio having the same id as the first portfolio
+
+[33mcommit 4e0ba907d1456d059842c3915af03a9f3912f94f[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 6 22:52:48 2025 +0100
+
+    Seed Portfolio and PortfolioStock
+
+[33mcommit b48f74913fc1e3d00f192f367f5c2dea680c3b19[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 6 22:50:02 2025 +0100
+
+    Change Id type to Int
+
+[33mcommit 4c11688df1c4af5e823ff301cf3a3ab75b4a7fcc[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 6 22:10:20 2025 +0100
+
+    Add Transactions administration
+
+[33mcommit b96f7abfa6148fb5faa2bb2642ef461f74044b57[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 6 22:09:53 2025 +0100
+
+    Seed Transactions and Orders
+
+[33mcommit 00b1e9826d07f49c10232b9754ebfcc8e9d355d2[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 6 16:28:49 2025 +0100
+
+    Remove [NotMapped] from the User members and map the User in DbContext
+
+[33mcommit 9b43269561b32554faed21bf6255f08b8043923b[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 6 15:36:43 2025 +0100
+
+    Add validation for TickerSymbol to the Update view
+
+[33mcommit 6ccfdbeec76254e7aa1df13dcae8fa4314259316[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 6 15:10:17 2025 +0100
+
+    Add client validation - TickerSymbol has to be capitalized
+
+[33mcommit 8488ab83155c5a1f5994c77984331b6c3acc1da2[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Thu Nov 6 09:37:06 2025 +0100
+
+    Add server validation - TickerSymbol has to be capitalized
+
+[33mcommit faf4170cbd48d36984b6eb083209d2b0cce49167[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Wed Nov 5 00:35:13 2025 +0100
+
+    Authorization to manage stocks
+
+[33mcommit d81337ebebf66ce8c9c876aa8f2ba15da60a3ae6[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Wed Nov 5 00:29:24 2025 +0100
+
+    Change Admin and Manager password, apply migrations at app startup
+
+[33mcommit 91b2b19bda0c055307a06c3eab1ced805487efe1[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Tue Nov 4 23:36:27 2025 +0100
+
+    Add register and login
+
+[33mcommit 37b2d766e81430efb787f34ba953683af1444a8e[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Tue Nov 4 22:05:08 2025 +0100
+
+    Add responsive table and decorate delete, edit and create links/buttons; add cancel buttons
+
+[33mcommit 1eae703e3590ae060c20d6bd05c1fe664231e203[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Mon Nov 3 20:33:31 2025 +0100
+
+    Add ability to update a stock
+
+[33mcommit 2c0485c3737b34c426fe5d8b6dc4acb9d42a9657[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Mon Nov 3 18:49:06 2025 +0100
+
+    Add delete confirmation
+
+[33mcommit b34efc515a158aae9784ab921041f1c46fc35ebe[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Mon Nov 3 18:15:21 2025 +0100
+
+    style: Minor formatting cleanup
+
+[33mcommit 7209fbe9a8e727997774a55e30217c8e0e312b84[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Mon Nov 3 18:13:10 2025 +0100
+
+    Add ability to delete a stock
+
+[33mcommit b9943b2391b549714115b869c44794dee6cfda48[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Mon Nov 3 17:55:30 2025 +0100
+
+    Add ability to create a stock
+
+[33mcommit f236578a9034a53930ac3dfc67abc226b8759ac8[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Mon Nov 3 17:34:13 2025 +0100
+
+    Dynamic generation of View based on data from the model
+
+[33mcommit 6e15a7bef81d23aa55a6c6e55e30b7b49d9f466b[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Mon Nov 3 15:19:43 2025 +0100
+
+    Add Areas and routing
+
+[33mcommit a34189bbd50609c83aba47b3107f876da7e506f2[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Mon Nov 3 01:26:53 2025 +0100
+
+    Add Identity
+
+[33mcommit 94981ae3da154e4b68c61d3d83324fd5c95829ec[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Wed Oct 29 12:24:11 2025 +0100
+
+    Add .gitignore
+
+[33mcommit e01c661736f2cae56a91563a444e79d83e3791d8[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Wed Oct 29 11:18:53 2025 +0100
+
+    chore: Stop tracking build artifacts and user-specific files
+
+[33mcommit 5cce7faea1ae06841e8e20088eb5710a16556251[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Mon Oct 27 23:21:41 2025 +0100
+
+    remove OrderType
+
+[33mcommit b161939411663c7d69695a69d19ada2f237c125e[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Mon Oct 27 17:06:03 2025 +0100
+
+    Refine entity attributes
+
+[33mcommit 4d326907c7804a66fcbd4305e919f93f76344afb[m
+Author: rucen <ucen.rich@gmail.com>
+Date:   Sun Oct 19 16:24:05 2025 +0200
+
+    create migration mysql_1.0.0_init

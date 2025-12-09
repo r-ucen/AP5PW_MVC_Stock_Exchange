@@ -20,7 +20,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     TickerSymbol = "AAPL",
                     FullName = "Apple Inc.",
                     CurrentPrice = 150.00m,
-                    ImageSrcUrl = "/img/stocks/AAPL.png"
+                    ImageSrc = "/img/stocks/AAPL.png"
                 },
                 new Stock
                 {
@@ -28,7 +28,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     TickerSymbol = "MSFT",
                     FullName = "Microsoft Corporation",
                     CurrentPrice = 400.00m,
-                    ImageSrcUrl = "/img/stocks/MSFT.png"
+                    ImageSrc = "/img/stocks/MSFT.png"
                 },
                 new Stock
                 {
@@ -36,7 +36,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     TickerSymbol = "GOOGL",
                     FullName = "Alphabet Inc.",
                     CurrentPrice = 280.00m,
-                    ImageSrcUrl = "/img/stocks/GOOGL.png"
+                    ImageSrc = "/img/stocks/GOOGL.png"
                 },
                 new Stock
                 {
@@ -44,7 +44,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     TickerSymbol = "AMZN",
                     FullName = "Amazon.com, Inc.",
                     CurrentPrice = 250.00m,
-                    ImageSrcUrl = "/img/stocks/AMZN.png"
+                    ImageSrc = "/img/stocks/AMZN.png"
                 },
                 new Stock
                 {
@@ -52,7 +52,7 @@ namespace StockExchange.Infrastructure.Database.Seeding
                     TickerSymbol = "TSLA",
                     FullName = "Tesla, Inc.",
                     CurrentPrice = 450.00m,
-                    ImageSrcUrl = "/img/stocks/TSLA.png"
+                    ImageSrc = "/img/stocks/TSLA.png"
                 }
             };
             return stocks;

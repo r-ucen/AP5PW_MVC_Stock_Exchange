@@ -18,7 +18,7 @@
                     <th scope="col">@nameof(Stock.TickerSymbol)</th>
                     <th scope="col">@nameof(Stock.FullName)</th>
                     <th scope="col">@nameof(Stock.CurrentPrice)</th>
-                    <th scope="col">@nameof(Stock.ImageSrcUrl)</th>
+                    <th scope="col">@nameof(Stock.ImageSrc)</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -34,7 +34,7 @@
                             <span>$ </span>
                             <span data-stock-price="@stock.TickerSymbol">@stock.CurrentPrice.ToString("N2")</span>
                         </td>
-                        <td>@stock.ImageSrcUrl</td>
+                        <td>@stock.ImageSrc</td>
                         <td>
                             <a asp-action="Update" asp-route-id="@stock.Id" class="btn btn-secondary">Edit</a>
                             <a asp-action="Delete" asp-route-id="@stock.Id" class="btn btn-danger">Delete</a>

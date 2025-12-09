@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockExchange.Domain.Validations;
-using Microsoft.AspNetCore.Http;
 
 namespace StockExchange.Domain.Entities
 {
@@ -26,11 +25,7 @@ namespace StockExchange.Domain.Entities
         [Column(TypeName = "decimal(18, 4)")]
         public decimal CurrentPrice { get; set; }
 
-        [StringLength(1024)]
-        public string? ImageSrcUrl { get; set; }
-
-        [NotMapped]
-        public IFormFile? Image { get; set; }
+        public string? ImageSrc { get; set; }
 
         // Navigation properties
         public ICollection<PortfolioStock> PortfolioStocks { get; set; } = new List<PortfolioStock>();
