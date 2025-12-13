@@ -17,5 +17,7 @@ namespace StockExchange.Application.Abstraction
         Task<IList<UserViewModel>> GetAllUsers();
         Task<UserViewModel> GetUserById(int id);
         Task<bool> DeleteUser(int id);
+        Task<bool> DisableUser(int id);
+        Task<bool> EnableUser(int id);
     }
 }

@@ -38,6 +38,7 @@ namespace StockExchange.Application.Implementation
                     PhoneNumber = user.PhoneNumber,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
+                    IsDisabled = user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTimeOffset.UtcNow,
                     Roles = await userManager.GetRolesAsync(user)
                 });
             }
@@ -60,6 +61,7 @@ namespace StockExchange.Application.Implementation
                 PhoneNumber = user.PhoneNumber,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                IsDisabled = user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTimeOffset.UtcNow,
                 Roles = userManager.GetRolesAsync(user).Result
             };
 
@@ -73,6 +75,26 @@ namespace StockExchange.Application.Implementation
                 return false;
 
             var result = await userManager.DeleteAsync(user);
+            return result.Succeeded;
+        }
+
+        public async Task<bool> DisableUser(int id)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+                return false;
+            user.LockoutEnd = DateTimeOffset.UtcNow.AddYears(1000);
+            var result = await userManager.UpdateAsync(user);
+            return result.Succeeded;
+        }
+
+        public async Task<bool> EnableUser(int id)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+                return false;
+            user.LockoutEnd = null;
+            var result = await userManager.UpdateAsync(user);
             return result.Succeeded;
         }
 

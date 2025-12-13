@@ -14,6 +14,7 @@ namespace StockExchange.Application.ViewModels
         public string? PhoneNumber { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public bool IsDisabled { get; set; }
         public IList<string> Roles { get; set; } = new List<string>();
     }
 }

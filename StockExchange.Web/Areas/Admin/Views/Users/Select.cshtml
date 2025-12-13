@@ -37,6 +37,16 @@
                             <td>@string.Join(", ", @user.Roles)</td>
                             <td>
                                 <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
+                                @if (user.IsDisabled)
+                                {
+                                    <a asp-action="Disable" asp-route-id="@user.Id" class="btn btn-warning disabled" aria-disabled="true">Disable</a>
+                                    <a asp-action="Enable" asp-route-id="@user.Id" class="btn btn-warning">Enable</a>
+                                } else
+                                {
+                                    <a asp-action="Disable" asp-route-id="@user.Id" class="btn btn-warning">Disable</a>
+                                    <a asp-action="Enable" asp-route-id="@user.Id" class="btn btn-warning disabled" aria-disabled="true">Enable</a>
+                                }
+                                
                             </td>
                         </tr>
                     }
