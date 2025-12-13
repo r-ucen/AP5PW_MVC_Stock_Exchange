@@ -13,6 +13,7 @@ namespace StockExchange.Application.ViewModels
         public string FullName { get; set; } = string.Empty;
         public int Quantity { get; set; }
         public decimal CurrentPrice { get; set; }
+        public string? ImageSrc { get; set; }
         public decimal AvgPurchasePrice { get; set; }
         public decimal TotalValue => Quantity * CurrentPrice;
         public decimal GainLoss => (Quantity * CurrentPrice) - (Quantity * AvgPurchasePrice);

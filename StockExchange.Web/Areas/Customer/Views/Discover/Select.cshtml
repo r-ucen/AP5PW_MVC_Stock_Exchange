@@ -20,22 +20,32 @@
         }
         else
         {
-            <div class="list-group">
-                @foreach (var holding in Model)
+            <div class="holding-list discover-list">
+                @foreach (var stock in Model)
                 {
-
-                    <div class="list-group-item holding-row" data-stock-id="@holding.Id">
-                        <div class="me-3">
-                            <div class="fw-semibold">@holding.FullName</div>
-                            <div>@holding.TickerSymbol</div>
+                    <div class="holding-row" data-stock-id="@stock.Id">
+                        <div>
+                            @if (!string.IsNullOrEmpty(stock.ImageSrc))
+                            {
+                                <img class="stock-icon" src="@Url.Content(stock.ImageSrc)" alt="@stock.FullName" />
+                            }
+                            else
+                            {
+                                <div class="stock-icon-placeholder"></div>
+                            }
                         </div>
 
                         <div>
-                            $ <span data-stock-price="@holding.TickerSymbol" data-holding-current-price>@holding.CurrentPrice.ToString("N2")</span>
+                            <div class="fw-semibold">@stock.FullName</div>
+                            <div>@stock.TickerSymbol</div>
                         </div>
 
                         <div>
-                            <a class="btn btn-primary" asp-area="Customer" asp-controller="Trade" asp-action="Buy" asp-route-stockId="@holding.Id">Buy</a>
+                            $ <span data-stock-price="@stock.TickerSymbol">@stock.CurrentPrice.ToString("N2")</span>
+                        </div>
+
+                        <div>
+                            <a class="btn btn-primary" asp-area="Customer" asp-controller="Trade" asp-action="Buy" asp-route-stockId="@stock.Id">Buy</a>
                         </div>
                     </div>
                 }

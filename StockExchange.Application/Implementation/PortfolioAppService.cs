@@ -65,6 +65,7 @@ namespace StockExchange.Application.Implementation
                                       FullName = s.FullName,
                                       Quantity = ps.Quantity,
                                       CurrentPrice = s.CurrentPrice,
+                                      ImageSrc = s.ImageSrc,
                                       AvgPurchasePrice = ps.AvgPurchasePrice
                                   }).ToListAsync();
 

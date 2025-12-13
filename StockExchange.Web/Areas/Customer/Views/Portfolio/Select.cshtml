@@ -20,7 +20,7 @@
         }
         else
         {
-            <div class="list-group">
+            <div class="holding-list">
                 @foreach (var holding in Model)
                 {
                     var gainClass = holding.GainLoss >= 0 ? "text-success" : "text-danger";
@@ -29,11 +29,19 @@
                         gainClass = "text-muted";
                     }
 
-                    <div class="list-group-item holding-row" data-stock-id="@holding.StockId">
+                    <div class="holding-row" data-stock-id="@holding.StockId">
+                        @if (!string.IsNullOrEmpty(holding.ImageSrc))
+                        {
+                            <div>
+                                <img class="stock-icon" src="@Url.Content(holding.ImageSrc)" alt="@holding.FullName" />
+                            </div>
+                        }
+                        
+                        
                         <div class="me-3">
                             <div class="fw-semibold">@holding.FullName</div>
                             <div>@holding.TickerSymbol</div>
-                            <small data-holding-quantity>@holding.Quantity</small>
+                            <div><small data-holding-quantity>@holding.Quantity</small>@(holding.Quantity == 1 ? " Share" : " Shares")</div>
                         </div>
 
                         <div>
@@ -45,7 +53,7 @@
                         </div>
 
                         <div>
-                            $ <span data-stock-price="@holding.TickerSymbol" data-holding-current-price>@holding.CurrentPrice.ToString("N2")</span>
+                            Current price: $ <span data-stock-price="@holding.TickerSymbol" data-holding-current-price>@holding.CurrentPrice.ToString("N2")</span>
                         </div>
 
                         <div>

@@ -1,38 +1,183 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+    color: var(--bs-secondary-color);
+    text-align: end;
 }
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    text-align: start;
 }
 
-.holding-row, transaction-row {
+/* Portfolio and Discover Base */
+
+.holding-list {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr auto;
     align-items: center;
-    gap: 20px;
+    row-gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #444;
+    border-radius: 8px;
+}
+
+/* Desktop Styles */
+@media (min-width: 769px) {
+    .holding-row {
+        display: contents;
+    }
+
+    .holding-row > * {
+        padding: 0 10px;
+    }
+
+    /* Portfolio Desktop: 5 columns */
+    .holding-list:not(.discover-list) {
+        grid-template-columns: auto 1fr 1fr 1fr auto;
+    }
+
+    /* Discover Desktop: 4 columns */
+    .discover-list {
+        grid-template-columns: auto 1fr 1fr auto;
+    }
+}
+
+.stock-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.stock-icon-placeholder {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #6c757d;
+}
+
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .holding-list {
+        grid-template-columns: 1fr;
+        padding: 0.5rem;
+        border: none;
+    }
+
+    /* Base styles for all holding rows on mobile */
+    .holding-row {
+        display: grid;
+        gap: 0.5rem 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #444;
+    }
+
+    .holding-row:last-child {
+        border-bottom: none;
+    }
+
+    /* Portfolio Page Mobile Layout */
+    .holding-list:not(.discover-list) .holding-row {
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto auto auto;
+    }
+
+    .holding-list:not(.discover-list) .holding-row > div:nth-child(1) { /* Icon */
+        grid-column: 1;
+        grid-row: 1;
+        align-self: center;
+        justify-self: center;
+    }
+
+    .holding-list:not(.discover-list) .holding-row > div:nth-child(2) { /* Name/Ticker/Shares */
+        grid-column: 2;
+        grid-row: 1;
+        align-self: center;
+        text-align: center;
+    }
+
+    .holding-list:not(.discover-list) .holding-row > div:nth-child(3) { /* Value/Gain */
+        grid-column: 1 / -1;
+        grid-row: 2;
+        text-align: center;
+    }
+
+    .holding-list:not(.discover-list) .holding-row > div:nth-child(4) { /* Price */
+        grid-column: 1 / -1;
+        grid-row: 3;
+        text-align: center;
+    }
+
+    .holding-list:not(.discover-list) .holding-row > div:nth-child(5) { /* Buttons */
+        grid-column: 1 / -1;
+        grid-row: 4;
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .holding-list:not(.discover-list) .holding-row > div:nth-child(5) > a {
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    /* Discover Page Mobile Layout */
+    .discover-list .holding-row {
+        grid-template-columns: auto 1fr; /* Icon and Name */
+        grid-template-rows: auto auto auto;
+    }
+
+    .discover-list .holding-row > div:nth-child(1) { /* Icon */
+        grid-column: 1;
+        grid-row: 1;
+        align-self: center;
+        justify-self: center;
+    }
+
+    .discover-list .holding-row > div:nth-child(2) { /* Name/Ticker */
+        grid-column: 2;
+        grid-row: 1;
+        align-self: center;
+        text-align: center;
+    }
+
+    .discover-list .holding-row > div:nth-child(3) { /* Price */
+        grid-column: 1 / -1;
+        grid-row: 2;
+        text-align: center;
+    }
+
+    .discover-list .holding-row > div:nth-child(4) { /* Button */
+        grid-column: 1 / -1;
+        grid-row: 3;
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .discover-list .holding-row > div:nth-child(4) > a {
+        flex-grow: 1;
+        text-align: center;
+    }
 }

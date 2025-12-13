@@ -34,7 +34,13 @@
                             <span>$ </span>
                             <span data-stock-price="@stock.TickerSymbol">@stock.CurrentPrice.ToString("N2")</span>
                         </td>
-                        <td>@stock.ImageSrc</td>
+                        <td>
+                            <span>@stock.ImageSrc</span>
+                                @if (!string.IsNullOrEmpty(stock.ImageSrc))
+                                {
+                                    <img src="@Url.Content(stock.ImageSrc)" alt="@stock.FullName" width="20" height="20" />
+                                }
+                            </td>
                         <td>
                             <a asp-action="Update" asp-route-id="@stock.Id" class="btn btn-secondary">Edit</a>
                             <a asp-action="Delete" asp-route-id="@stock.Id" class="btn btn-danger">Delete</a>
