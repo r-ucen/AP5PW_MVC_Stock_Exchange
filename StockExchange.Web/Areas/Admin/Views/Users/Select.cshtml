@@ -1,7 +1,11 @@
 ﻿@model IList<UserViewModel>
+@using System.Security.Claims
+@using StockExchange.Infrastructure.Identity.Enums
 
 @{
     ViewData["Title"] = "User Administration";
+    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    string[] protectedRoles = [nameof(Roles.Admin), nameof(Roles.Manager)];
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -27,6 +31,10 @@
                 <tbody>
                     @foreach (var user in Model)
                     {
+                        var isCurrentUser = currentUserId == user.Id.ToString();
+                        var isProtectedUser = user.Roles.Any(r => protectedRoles.Contains(r));
+                        var canModify = !isCurrentUser && !isProtectedUser;
+
                         <tr>
                             <th scope="row">@user.Id</th>
                             <td>@user.Username</td>
@@ -37,19 +45,28 @@
                             <td>@string.Join(", ", @user.Roles)</td>
                             <td>
                                 <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
-                                @if (user.IsDisabled)
+                                @if (canModify)
                                 {
-                                    <a asp-action="Disable" asp-route-id="@user.Id" class="btn btn-warning disabled" aria-disabled="true">Disable</a>
-                                    <a asp-action="Enable" asp-route-id="@user.Id" class="btn btn-warning">Enable</a>
-                                } else
-                                {
-                                    <a asp-action="Disable" asp-route-id="@user.Id" class="btn btn-warning">Disable</a>
-                                    <a asp-action="Enable" asp-route-id="@user.Id" class="btn btn-warning disabled" aria-disabled="true">Enable</a>
+                                    @if (user.IsDisabled)
+                                    {
+                                        <span class="btn btn-secondary disabled">Disable</span>
+                                        <a asp-action="Enable" asp-route-id="@user.Id" class="btn btn-success">Enable</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Disable" asp-route-id="@user.Id" class="btn btn-warning">Disable</a>
+                                        <span class="btn btn-secondary disabled">Enable</span>
+                                    }
                                 }
-                                
+                                else
+                                {
+                                    <span class="btn btn-secondary disabled" title="Cannot modify Admin/Manager or yourself">Disable</span>
+                                    <span class="btn btn-secondary disabled" title="Cannot modify Admin/Manager or yourself">Enable</span>
+                                }
                             </td>
                         </tr>
                     }
+                </tbody>
             </table>
         </div>
     }

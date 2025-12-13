@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StockExchange.Application.Abstraction;
+using StockExchange.Application.ViewModels;
+using StockExchange.Infrastructure.Identity.Enums;
+using System.Security.Claims;
 
 namespace StockExchange.Web.Areas.Admin.Controllers
 {
@@ -8,6 +11,7 @@ namespace StockExchange.Web.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         IAccountService _accountService;
+        private static readonly string[] ProtectedRoles = [nameof(Roles.Admin), nameof(Roles.Manager)];
 
         public UsersController(IAccountService accountService)
         {
@@ -45,12 +49,27 @@ namespace StockExchange.Web.Areas.Admin.Controllers
             var user = _accountService.GetUserById(id).Result;
             if (user == null)
                 return NotFound();
+
+            if (!CanModifyUser(user))
+            {
+                return RedirectToAction("Select");
+            }
+
             return View(user);
         }
 
         [HttpPost, ActionName("Disable")]
         public IActionResult DisableConfirmed(int id)
         {
+            var user = _accountService.GetUserById(id).Result;
+            if (user == null)
+                return NotFound();
+
+            if (!CanModifyUser(user))
+            {
+                return RedirectToAction("Select");
+            }
+
             var result = _accountService.DisableUser(id).Result;
             if (result)
                 return RedirectToAction("Select");
@@ -75,6 +94,19 @@ namespace StockExchange.Web.Areas.Admin.Controllers
                 return RedirectToAction("Select");
             else
                 return BadRequest();
+        }
+
+        private bool CanModifyUser(UserViewModel user)
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (int.TryParse(currentUserId, out var currentId) && currentId == user.Id)
+                return false;
+
+            if (user.Roles.Any(r => ProtectedRoles.Contains(r)))
+                return false;
+
+            return true;
         }
     }
 }
