@@ -1,0 +1,42 @@
+﻿@model IList<UserViewModel>
+
+@{
+    ViewData["Title"] = "User Administration";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@{
+    if (Model!= null && Model.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">@nameof(UserViewModel.Id)</th>
+                        <th scope="col">@nameof(UserViewModel.Username)</th>
+                        <th scope="col">@nameof(UserViewModel.Email)</th>
+                        <th scope="col">@nameof(UserViewModel.PhoneNumber)</th>
+                        <th scope="col">@nameof(UserViewModel.FirstName)</th>
+                        <th scope="col">@nameof(UserViewModel.LastName)</th>
+                        <th scope="col">@nameof(UserViewModel.Roles)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <th scope="row">@user.Id</th>
+                            <td>@user.Username</td>
+                            <td>@user.Email</td>
+                            <td>@(user.PhoneNumber != null ? user.PhoneNumber : "-")</td>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td>@string.Join(", ", @user.Roles)</td>
+                        </tr>
+                    }
+            </table>
+        </div>
+    }
+}

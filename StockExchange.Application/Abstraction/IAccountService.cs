@@ -13,5 +13,6 @@ namespace StockExchange.Application.Abstraction
         Task<bool> Login(LoginViewModel vm);
         Task Logout();
         Task<string[]> Register(RegisterViewModel vm, params Roles[] roles);
+        Task<IList<UserViewModel>> GetAllUsers();
     }
 }

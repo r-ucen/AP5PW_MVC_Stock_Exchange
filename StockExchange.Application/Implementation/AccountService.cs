@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using StockExchange.Application.Abstraction;
 using StockExchange.Application.ViewModels;
 using StockExchange.Infrastructure.Identity;
@@ -22,6 +23,27 @@ namespace StockExchange.Application.Implementation
             this.signInManager = signInManager;
         }
 
+        public async Task<IList<UserViewModel>> GetAllUsers()
+        {
+            var users = await userManager.Users.ToArrayAsync();
+            var userViewModels = new List<UserViewModel>();
+
+            foreach (User user in users)
+            {
+                userViewModels.Add(new UserViewModel
+                {
+                    Id = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Roles = await userManager.GetRolesAsync(user)
+                });
+            }
+
+            return userViewModels;
+        }
 
         public async Task<bool> Login(LoginViewModel vm)
         {
