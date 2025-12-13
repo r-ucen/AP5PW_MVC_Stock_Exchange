@@ -1,4 +1,5 @@
-﻿using StockExchange.Application.ViewModels;
+﻿using Microsoft.AspNetCore.Identity;
+using StockExchange.Application.ViewModels;
 using StockExchange.Infrastructure.Identity.Enums;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,7 @@ namespace StockExchange.Application.Abstraction
         Task Logout();
         Task<string[]> Register(RegisterViewModel vm, params Roles[] roles);
         Task<IList<UserViewModel>> GetAllUsers();
+        Task<UserViewModel> GetUserById(int id);
+        Task<bool> DeleteUser(int id);
     }
 }

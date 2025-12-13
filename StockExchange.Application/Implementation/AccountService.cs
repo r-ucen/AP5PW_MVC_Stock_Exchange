@@ -45,6 +45,37 @@ namespace StockExchange.Application.Implementation
             return userViewModels;
         }
 
+        public async Task<UserViewModel> GetUserById(int id)
+        {
+            var user = await userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+
+            if (user == null)
+                return null;
+
+            UserViewModel userViewModel = new UserViewModel
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Roles = userManager.GetRolesAsync(user).Result
+            };
+
+            return userViewModel;
+        }
+
+        public async Task<bool> DeleteUser(int id)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+                return false;
+
+            var result = await userManager.DeleteAsync(user);
+            return result.Succeeded;
+        }
+
         public async Task<bool> Login(LoginViewModel vm)
         {
             var result = await signInManager.PasswordSignInAsync(vm.Username, vm.Password, true, true);

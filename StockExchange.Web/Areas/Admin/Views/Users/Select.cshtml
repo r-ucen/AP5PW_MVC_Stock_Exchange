@@ -20,6 +20,7 @@
                         <th scope="col">@nameof(UserViewModel.FirstName)</th>
                         <th scope="col">@nameof(UserViewModel.LastName)</th>
                         <th scope="col">@nameof(UserViewModel.Roles)</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
 
@@ -34,6 +35,9 @@
                             <td>@user.FirstName</td>
                             <td>@user.LastName</td>
                             <td>@string.Join(", ", @user.Roles)</td>
+                            <td>
+                                <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
+                            </td>
                         </tr>
                     }
             </table>
