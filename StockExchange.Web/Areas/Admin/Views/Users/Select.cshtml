@@ -40,8 +40,8 @@
                             <td>@user.Username</td>
                             <td>@user.Email</td>
                             <td>@(user.PhoneNumber != null ? user.PhoneNumber : "-")</td>
-                            <td>@user.FirstName</td>
-                            <td>@user.LastName</td>
+                            <td>@(user.FirstName != null ? user.FirstName : "-")</td>
+                            <td>@(user.LastName != null ? user.LastName : "-")</td>
                             <td>@string.Join(", ", @user.Roles)</td>
                             <td>
                                 @if (canModify)
