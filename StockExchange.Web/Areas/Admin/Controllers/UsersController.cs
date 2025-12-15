@@ -13,7 +13,6 @@ namespace StockExchange.Web.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         IAccountService _accountService;
-        private static readonly string[] ProtectedRoles = [nameof(Roles.Admin), nameof(Roles.Manager)];
 
         public UsersController(IAccountService accountService)
         {
@@ -131,12 +130,27 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         private bool CanModifyUser(UserViewModel user)
         {
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInAsAdmin = User.IsInRole(nameof(Roles.Admin));
+            var loggedInAsManager = User.IsInRole(nameof(Roles.Manager));
 
-            if (int.TryParse(currentUserId, out var currentId) && currentId == user.Id)
-                return false;
+            var userIsCurrentUser = currentUserId == user.Id.ToString();
+            var userIsAdmin = user.Roles.Contains(nameof(Roles.Admin));
+            var userIsManager = user.Roles.Contains(nameof(Roles.Manager));
 
-            if (user.Roles.Any(r => ProtectedRoles.Contains(r)))
+            if (userIsCurrentUser)
+            {
                 return false;
+            }
+
+            if (loggedInAsAdmin)
+            {
+                return !userIsAdmin;
+            }
+
+            if (loggedInAsManager)
+            {
+                return !userIsAdmin && !userIsManager;
+            }
 
             return true;
         }

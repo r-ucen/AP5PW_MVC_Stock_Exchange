@@ -53,42 +53,42 @@
                                         <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
 
                                         @if (user.IsDisabled)
-                                {
+                                        {
                                             <span class="btn btn-secondary disabled">Disable</span>
                                             <a asp-action="Enable" asp-route-id="@user.Id" class="btn btn-success">Enable</a>
-                                    }
-                                    else
-                                    {
+                                        }
+                                        else
+                                        {
                                             <a asp-action="Disable" asp-route-id="@user.Id" class="btn btn-warning">Disable</a>
                                             <span class="btn btn-secondary disabled">Enable</span>
+                                        }
                                     }
-                                }
                                     else {
-                                    <span class="btn btn-secondary disabled" title="Cannot edit roles">Edit Roles</span>
+                                        <span class="btn btn-secondary disabled" title="Cannot edit roles">Edit Roles</span>
                                         <span class="btn btn-secondary disabled" title="Cannot modify">Delete</span>
                                         <span class="btn btn-secondary disabled" title="Cannot modify">Disable</span>
                                         <span class="btn btn-secondary disabled" title="Cannot modify">Enable</span>
-                                }
+                                    }
                                 } else if (loggedInAsManager)
                                 {
                                     @if (!userIsAdmin && !userIsManager && !userIsCurrentUser)
-                                {
-                                        <a asp-action="EditRoles" asp-route-id="@user.Id" class="btn btn-success">Edit Roles</a>
-                                    <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
-
-                                    @if (user.IsDisabled)
                                     {
-                                        <span class="btn btn-secondary disabled">Disable</span>
-                                        <a asp-action="Enable" asp-route-id="@user.Id" class="btn btn-success">Enable</a>
+                                        <a asp-action="EditRoles" asp-route-id="@user.Id" class="btn btn-success">Edit Roles</a>
+                                        <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
+
+                                        @if (user.IsDisabled)
+                                        {
+                                            <span class="btn btn-secondary disabled">Disable</span>
+                                            <a asp-action="Enable" asp-route-id="@user.Id" class="btn btn-success">Enable</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="Disable" asp-route-id="@user.Id" class="btn btn-warning">Disable</a>
+                                            <span class="btn btn-secondary disabled">Enable</span>
+                                        }
                                     }
                                     else
                                     {
-                                        <a asp-action="Disable" asp-route-id="@user.Id" class="btn btn-warning">Disable</a>
-                                        <span class="btn btn-secondary disabled">Enable</span>
-                                    }
-                                }
-                                else
-                                {
                                         <span class="btn btn-secondary disabled" title="Cannot edit roles">Edit Roles</span>
                                         <span class="btn btn-secondary disabled" title="Cannot modify">Delete</span>
                                         <span class="btn btn-secondary disabled" title="Cannot modify">Disable</span>
