@@ -6,8 +6,13 @@ using StockExchange.Infrastructure.Database;
 using StockExchange.Infrastructure.Identity;
 using StockExchange.Web.Hubs;
 using StockExchange.Web.Services;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var cultureInfo = new CultureInfo("en-US");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 // Add services to the container.
 builder.Services.AddRazorPages();

@@ -1,4 +1,13 @@
-﻿const connection = new signalR.HubConnectionBuilder()
+﻿const LOCALE = "en-US";
+
+function formatNumber(value) {
+    return value.toLocaleString(LOCALE, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+const connection = new signalR.HubConnectionBuilder()
     .withUrl("/stockHub")
     .withAutomaticReconnect()
     .build();
@@ -7,7 +16,7 @@ connection.on("ReceiveStockPriceUpdate", (tickerSymbol, newPrice) => {
     const priceElements = document.querySelectorAll(`[data-stock-price="${tickerSymbol}"]`);
 
     priceElements.forEach(element => {
-        element.textContent = newPrice.toFixed(2);
+        element.textContent = formatNumber(newPrice);
     });
 });
 
@@ -20,11 +29,11 @@ connection.on("ReceivePortfolioSummaryUpdate", summary => {
     const depositsElements = root.querySelectorAll("[data-deposits]");
 
     portfolioValueElements.forEach(element => {
-        element.textContent = summary.portfolioValue.toFixed(2);
+        element.textContent = formatNumber(summary.portfolioValue);
     });
 
     unrealizedGainElements.forEach(element => {
-        element.textContent = summary.unrealizedGains.toFixed(2);
+        element.textContent = formatNumber(summary.unrealizedGains);
         const gainsPainter = element.closest("[gains-painter]");
 
         if (gainsPainter) {
@@ -36,15 +45,15 @@ connection.on("ReceivePortfolioSummaryUpdate", summary => {
     });
 
     unrealizedGainPctElements.forEach(element => {
-        element.textContent = summary.unrealizedGainPercentage.toFixed(2);
+        element.textContent = formatNumber(summary.unrealizedGainPercentage);
     });
 
     availableCashElements.forEach(element => {
-        element.textContent = summary.availableCash.toFixed(2);
+        element.textContent = formatNumber(summary.availableCash);
     });
 
     depositsElements.forEach(element => {
-        element.textContent = summary.deposits.toFixed(2);
+        element.textContent = formatNumber(summary.deposits);
     })
 });
 
@@ -63,10 +72,10 @@ connection.on("ReceivePortfolioHoldingsUpdate", holdings => {
         const gainLossPainterEl = holdingRow.querySelector("[data-gain-loss-painter]");
 
         if (quantityEl) quantityEl.textContent = holding.quantity;
-        if (totalValueEl) totalValueEl.textContent = holding.totalValue.toFixed(2);
-        if (gainLossEl) gainLossEl.textContent = holding.gainLoss.toFixed(2);
-        if (currentPriceEl) currentPriceEl.textContent = holding.currentPrice.toFixed(2);
-        if (gainLossPctEl) gainLossPctEl.textContent = holding.gainLossPercentage.toFixed(2);
+        if (totalValueEl) totalValueEl.textContent = formatNumber(holding.totalValue);
+        if (gainLossEl) gainLossEl.textContent = formatNumber(holding.gainLoss);
+        if (currentPriceEl) currentPriceEl.textContent = formatNumber(holding.currentPrice);
+        if (gainLossPctEl) gainLossPctEl.textContent = formatNumber(holding.gainLossPercentage);
 
         if (gainLossPainterEl) {
             gainLossPainterEl.classList.toggle("text-success", holding.gainLoss > 0);
