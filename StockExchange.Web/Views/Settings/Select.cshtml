@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Settings";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="mode-switch">
+    <button title="Use light mode" id="light" class="btn btn-sm btn-default text-secondary">
+        <i class="bi bi-sun"></i>
+    </button>
+    <button title="Use dark mode" id="dark" class="btn btn-sm btn-default text-secondary">
+        <i class="bi bi-moon"></i>
+    </button>
+    <button title="Use system preferred mode" id="system" class="btn btn-sm btn-default text-secondary">
+        <i class="bi bi-display"></i>
+    </button>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const getStoredTheme = () => localStorage.getItem('bs-theme');
+            const setStoredTheme = theme => localStorage.setItem('bs-theme', theme);
+
+            const updateActiveButton = () => {
+                const theme = getStoredTheme() || 'system';
+                document.querySelectorAll('.mode-switch .btn').forEach(btn => {
+                    btn.classList.remove('active', 'text-body');
+                });
+                const activeButton = document.getElementById(theme);
+                if (activeButton) {
+                    activeButton.classList.add('active', 'text-body');
+                }
+            };
+
+            document.querySelectorAll('.mode-switch .btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const theme = btn.id;
+                    if (theme === 'system') {
+                        localStorage.removeItem('bs-theme');
+                        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                        document.documentElement.setAttribute('data-bs-theme', systemTheme);
+                    } else {
+                        setStoredTheme(theme);
+                        document.documentElement.setAttribute('data-bs-theme', theme);
+                    }
+                    updateActiveButton();
+                });
+            });
+
+            updateActiveButton();
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                if (getStoredTheme() === null) {
+                    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-bs-theme', systemTheme);
+                    updateActiveButton();
+                }
+            });
+        })();
+    </script>
+}
