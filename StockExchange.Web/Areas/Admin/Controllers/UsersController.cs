@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StockExchange.Application.Abstraction;
 using StockExchange.Application.ViewModels;
@@ -8,6 +9,7 @@ using System.Security.Claims;
 namespace StockExchange.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = nameof(Roles.Admin) + ", " + nameof(Roles.Manager))]
     public class UsersController : Controller
     {
         IAccountService _accountService;
@@ -30,12 +32,27 @@ namespace StockExchange.Web.Areas.Admin.Controllers
             var user = _accountService.GetUserById(id).Result;
             if (user == null)
                 return NotFound();
+
+            if (!CanModifyUser(user))
+            {
+                return RedirectToAction("Select");
+            }
+
             return View(user);
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfiremd(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
+            var user = _accountService.GetUserById(id).Result;
+            if (user == null)
+                return NotFound();
+
+            if (!CanModifyUser(user))
+            {
+                return RedirectToAction("Select");
+            }
+
             var result = _accountService.DeleteUser(id).Result;
             if (result)
                 return RedirectToAction("Select");
@@ -83,12 +100,27 @@ namespace StockExchange.Web.Areas.Admin.Controllers
             var user = _accountService.GetUserById(id).Result;
             if (user == null)
                 return NotFound();
+
+            if (!CanModifyUser(user))
+            {
+                return RedirectToAction("Select");
+            }
+
             return View(user);
         }
 
         [HttpPost, ActionName("Enable")]
-        public IActionResult EnableConfiremed(int id)
+        public IActionResult EnableConfirmed(int id)
         {
+            var user = _accountService.GetUserById(id).Result;
+            if (user == null)
+                return NotFound();
+
+            if (!CanModifyUser(user))
+            {
+                return RedirectToAction("Select");
+            }
+
             var result = _accountService.EnableUser(id).Result;
             if (result)
                 return RedirectToAction("Select");
