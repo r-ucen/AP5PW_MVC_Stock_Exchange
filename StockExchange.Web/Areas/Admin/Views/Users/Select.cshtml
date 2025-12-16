@@ -73,7 +73,7 @@
                                 {
                                     @if (!userIsAdmin && !userIsManager && !userIsCurrentUser)
                                     {
-                                        <a asp-action="EditRoles" asp-route-id="@user.Id" class="btn btn-success">Edit Roles</a>
+                                        <span class="btn btn-secondary disabled" title="Cannot edit roles">Edit Roles</span>
                                         <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
 
                                         @if (user.IsDisabled)

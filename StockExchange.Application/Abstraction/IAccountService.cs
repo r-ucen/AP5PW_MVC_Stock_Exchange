@@ -19,5 +19,7 @@ namespace StockExchange.Application.Abstraction
         Task<bool> DeleteUser(int id);
         Task<bool> DisableUser(int id);
         Task<bool> EnableUser(int id);
+        Task<EditUserRolesViewModel> GetUserRolesForEdit(int id);
+        Task<bool> UpdateUserRoles(int userId, IList<string> selectedRoles);
     }
 }

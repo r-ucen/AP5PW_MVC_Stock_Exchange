@@ -1,0 +1,41 @@
+﻿@model EditUserRolesViewModel
+
+@{
+    ViewData["Title"] = "Edit User Roles";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Edit roles for: @Model.Username</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="EditRoles" method="post">
+            <input type="hidden" asp-for="UserId" name="id" />
+            <input type="hidden" asp-for="Username" />
+
+            <div class="form-group">
+                <label class="control-label">Select Roles</label>
+
+                @for (int i = 0; i < Model.AvailableRoles.Count; i++)
+                {
+                    <div class="form-check">
+                        <input type="hidden" name="AvailableRoles[@i].RoleName" value="@Model.AvailableRoles[i].RoleName" />
+                        <input type="checkbox"
+                               class="form-check-input"
+                               name="AvailableRoles[@i].IsSelected"
+                               value="true"
+                               @(Model.AvailableRoles[i].IsSelected ? "checked" : "") />
+                        <label class="form-check-label">@Model.AvailableRoles[i].RoleName</label>
+                    </div>
+                }
+            </div>
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a asp-action="Select" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

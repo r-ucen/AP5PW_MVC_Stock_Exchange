@@ -127,6 +127,68 @@ namespace StockExchange.Web.Areas.Admin.Controllers
                 return BadRequest();
         }
 
+        public IActionResult EditRoles(int id)
+        {
+            if (!User.IsInRole(nameof(Roles.Admin)))
+            {
+                return RedirectToAction("Select");
+            }
+
+            var user = _accountService.GetUserById(id).Result;
+
+            if (!CanModifyUser(user))
+            {
+                return RedirectToAction("Select");
+            }
+
+            var viewModel = _accountService.GetUserRolesForEdit(id).Result;
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+
+            viewModel.AvailableRoles = viewModel.AvailableRoles
+                .Where(r => r.RoleName == nameof(Roles.Manager))
+                .ToList();
+
+            return View(viewModel);
+        }
+
+        [HttpPost, ActionName("EditRoles")]
+        public IActionResult EditRolesConfirmed(int id, EditUserRolesViewModel model)
+        {
+            if (!User.IsInRole(nameof(Roles.Admin)))
+            {
+                return RedirectToAction("Select");
+            }
+
+            var user = _accountService.GetUserById(id).Result;
+            if (user == null) { 
+                return NotFound();
+            }
+            
+            if (!CanModifyUser(user))
+            {
+                return RedirectToAction("Select");
+            }
+
+            var selectedRoles = model.AvailableRoles
+                .Where(r => r.IsSelected)
+                .Select(r => r.RoleName)
+                .ToList();
+
+            if (!selectedRoles.Contains(nameof(Roles.Customer)))
+            {
+                selectedRoles.Add(nameof(Roles.Customer));
+            }
+
+            var result = _accountService.UpdateUserRoles(id, selectedRoles).Result;
+            if (result)
+                return RedirectToAction("Select");
+            else
+                return BadRequest();
+        }
+
         private bool CanModifyUser(UserViewModel user)
         {
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);

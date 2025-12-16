@@ -149,5 +149,49 @@ namespace StockExchange.Application.Implementation
 
             return errors;
         }
+
+        public async Task<EditUserRolesViewModel> GetUserRolesForEdit(int id)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return null;
+            }
+
+            var userRoles = await userManager.GetRolesAsync(user);
+            var allRoles = Enum.GetNames(typeof(Roles));
+
+            var viewModel = new EditUserRolesViewModel
+            {
+                UserId = user.Id,
+                Username = user.UserName,
+                AvailableRoles = allRoles.Select(role => new RoleSelection
+                {
+                    RoleName = role,
+                    IsSelected = userRoles.Contains(role)
+                }).ToList()
+            };
+
+            return viewModel;
+        }
+
+        public async Task<bool> UpdateUserRoles(int userId, IList<string> selectedRoles)
+        {
+            var user = await userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+                return false;
+
+            var currentRoles = await userManager.GetRolesAsync(user);
+
+            var rolesToRemove = currentRoles.Except(selectedRoles).ToList();
+            var removeResult = await userManager.RemoveFromRolesAsync(user, rolesToRemove);
+            if (!removeResult.Succeeded)
+                return false;
+
+            var rolesToAdd = selectedRoles.Except(currentRoles).ToList();
+            var addResult = await userManager.AddToRolesAsync(user, rolesToAdd);
+
+            return addResult.Succeeded;
+        }
     }
 }
