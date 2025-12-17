@@ -42,7 +42,7 @@
                 @foreach (var stock in Model)
                 {
                     <div class="holding-row" data-stock-id="@stock.Id">
-                        <div>
+                        <div class="desktop-icon">
                             @if (!string.IsNullOrEmpty(stock.ImageSrc))
                             {
                                 <img class="stock-icon" src="@Url.Content(stock.ImageSrc)" alt="@stock.FullName" />
@@ -53,26 +53,38 @@
                             }
                         </div>
 
-                        <div>
-                            <div class="d-flex justify-content-start">
-                                <div class="fw-semibold">@stock.FullName</div>
-                                @if (IsMarketOpen)
+                        <div class="stock-info">
+                            <div class="mobile-icon">
+                                @if (!string.IsNullOrEmpty(stock.ImageSrc))
                                 {
-                                    <div class="market-indicator open" data-tooltip="Markt is open"></div>
+                                    <img class="stock-icon" src="@Url.Content(stock.ImageSrc)" alt="@stock.FullName" />
                                 }
                                 else
                                 {
-                                    <div class="market-indicator closed" data-tooltip="Market is closed"></div>
+                                    <div class="stock-icon-placeholder"></div>
                                 }
                             </div>
-                            <div>@stock.TickerSymbol</div>
+                            <div class="stock-details">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="fw-semibold">@stock.FullName</div>
+                                    @if (IsMarketOpen)
+                                    {
+                                        <div class="market-indicator open" data-tooltip="Markt is open"></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="market-indicator closed" data-tooltip="Market is closed"></div>
+                                    }
+                                </div>
+                                <div class="text-muted">@stock.TickerSymbol</div>
+                            </div>
                         </div>
 
-                        <div>
+                        <div class="price-section">
                             $ <span data-stock-price="@stock.TickerSymbol">@stock.CurrentPrice.ToString("N2")</span>
                         </div>
 
-                        <div>
+                        <div class="action-buttons">
                             @if (IsMarketOpen) {
                                 <a class="btn btn-primary" asp-area="Customer" asp-controller="Trade" asp-action="Buy" asp-route-stockId="@stock.Id">Buy</a>
                             } else {

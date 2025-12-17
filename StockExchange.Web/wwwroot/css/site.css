@@ -41,6 +41,20 @@ body {
     border-radius: 8px;
 }
 
+.stock-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.stock-icon-placeholder {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #6c757d;
+}
+
 /* Desktop Styles */
 @media (min-width: 769px) {
     .holding-row {
@@ -60,125 +74,117 @@ body {
     .discover-list {
         grid-template-columns: auto 1fr 1fr auto;
     }
-}
 
-.stock-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-}
+    /* Hide mobile icon on desktop */
+    .mobile-icon {
+        display: none;
+    }
 
-.stock-icon-placeholder {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #6c757d;
+    .stock-info {
+        display: block;
+    }
 }
-
 
 /* Mobile Styles */
 @media (max-width: 768px) {
     .holding-list {
         grid-template-columns: 1fr;
-        padding: 0.5rem;
+        padding: 0;
         border: none;
+        gap: 1.5rem;
     }
 
-    /* Base styles for all holding rows on mobile */
+    /* Hide desktop icon on mobile */
+    .desktop-icon {
+        display: none !important;
+    }
+
+    /* Base card styles for all holding rows on mobile */
     .holding-row {
-        display: grid;
-        gap: 0.5rem 1rem;
-        padding: 1rem 0;
-        border-bottom: 1px solid #444;
-    }
-
-    .holding-row:last-child {
-        border-bottom: none;
-    }
-
-    /* Portfolio Page Mobile Layout */
-    .holding-list:not(.discover-list) .holding-row {
-        grid-template-columns: auto 1fr;
-        grid-template-rows: auto auto auto auto;
-    }
-
-    .holding-list:not(.discover-list) .holding-row > div:nth-child(1) { /* Icon */
-        grid-column: 1;
-        grid-row: 1;
-        align-self: center;
-        justify-self: center;
-    }
-
-    .holding-list:not(.discover-list) .holding-row > div:nth-child(2) { /* Name/Ticker/Shares */
-        grid-column: 2;
-        grid-row: 1;
-        align-self: center;
-        text-align: center;
-    }
-
-    .holding-list:not(.discover-list) .holding-row > div:nth-child(3) { /* Value/Gain */
-        grid-column: 1 / -1;
-        grid-row: 2;
-        text-align: center;
-    }
-
-    .holding-list:not(.discover-list) .holding-row > div:nth-child(4) { /* Price */
-        grid-column: 1 / -1;
-        grid-row: 3;
-        text-align: center;
-    }
-
-    .holding-list:not(.discover-list) .holding-row > div:nth-child(5) { /* Buttons */
-        grid-column: 1 / -1;
-        grid-row: 4;
         display: flex;
-        gap: 0.5rem;
-        margin-top: 0.5rem;
+        flex-direction: column;
+        padding: 1rem;
+        border-radius: 12px;
+        background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .holding-list:not(.discover-list) .holding-row > div:nth-child(5) > a {
-        flex-grow: 1;
-        text-align: center;
-    }
-
-    /* Discover Page Mobile Layout */
-    .discover-list .holding-row {
-        grid-template-columns: auto 1fr; /* Icon and Name */
-        grid-template-rows: auto auto auto;
-    }
-
-        .discover-list .holding-row > div:nth-child(1) { /* Icon */
-            grid-column: 1;
-            grid-row: 1;
-            align-self: center;
-            justify-self: center;
-        }
-
-    .discover-list .holding-row > div:nth-child(2) { /* Name/Ticker */
-        grid-column: 2;
-        grid-row: 1;
-        align-self: center;
-        text-align: center;
-    }
-
-    .discover-list .holding-row > div:nth-child(3) { /* Price */
-        grid-column: 1 / -1;
-        grid-row: 2;
-        text-align: center;
-    }
-
-    .discover-list .holding-row > div:nth-child(4) { /* Button */
-        grid-column: 1 / -1;
-        grid-row: 3;
+    /* Stock info section with icon */
+    .stock-info {
         display: flex;
-        gap: 0.5rem;
-        margin-top: 0.5rem;
+        align-items: center;
+        gap: 0.75rem;
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-    .discover-list .holding-row > div:nth-child(4) > a {
-        flex-grow: 1;
+    .mobile-icon {
+        flex-shrink: 0;
+    }
+
+    .mobile-icon .stock-icon {
+        width: 48px;
+        height: 48px;
+        border: 2px solid rgba(255,255,255,0.1);
+    }
+
+    .mobile-icon .stock-icon-placeholder {
+        width: 48px;
+        height: 48px;
+    }
+
+    .stock-details {
+        flex: 1;
+    }
+
+    /* Value section (Portfolio only) */
+    .value-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(0,0,0,0.2);
+        padding: 0.75rem;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Price section */
+    .holding-list:not(.discover-list) .price-section {
         text-align: center;
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.7);
+        padding: 0.5rem 0;
+    }
+
+        .discover-list .price-section {
+        text-align: center;
+        font-size: 1.25rem;
+        font-weight: 600;
+        padding: 0.75rem;
+        background: rgba(0,0,0,0.2);
+        border-radius: 8px;
+        margin-bottom: 0.75rem;
+    }
+
+    /* Action buttons */
+    .action-buttons {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .action-buttons > a,
+    .action-buttons > button {
+        flex: 1;
+        text-align: center;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        font-weight: 500;
     }
 }
 
