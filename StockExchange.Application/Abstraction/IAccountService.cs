@@ -21,5 +21,7 @@ namespace StockExchange.Application.Abstraction
         Task<bool> EnableUser(int id);
         Task<EditUserRolesViewModel> GetUserRolesForEdit(int id);
         Task<bool> UpdateUserRoles(int userId, IList<string> selectedRoles);
+        Task<EditSelfUserViewModel> GetSelfUserPropertiesForEdit();
+        Task<bool> UpdateSelfUserProperties(EditSelfUserViewModel vm);
     }
 }

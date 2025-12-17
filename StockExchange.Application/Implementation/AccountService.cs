@@ -193,5 +193,66 @@ namespace StockExchange.Application.Implementation
 
             return addResult.Succeeded;
         }
+
+        public async Task<EditSelfUserViewModel> GetSelfUserPropertiesForEdit()
+        {
+            var user = await userManager.GetUserAsync(signInManager.Context.User);
+            if (user == null)
+                throw new Exception("User not found");
+
+            var vm = new EditSelfUserViewModel
+            {
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
+
+            return vm;
+        }
+
+        public async Task<bool> UpdateSelfUserProperties(EditSelfUserViewModel vm)
+        {
+            var user = await userManager.GetUserAsync(signInManager.Context.User);
+            if (user == null)
+                return false;
+
+            if ((vm.Email != null) || (vm.Email != string.Empty) && vm.Email != user.Email)
+            {
+                var emailResult = await userManager.SetEmailAsync(user, vm.Email);
+                if (!emailResult.Succeeded) { 
+                    return false;
+                }
+            }
+
+            if ((vm.PhoneNumber != null) || (vm.PhoneNumber != string.Empty) && vm.PhoneNumber != user.PhoneNumber)
+            {
+                var phoneResult = await userManager.SetPhoneNumberAsync(user, vm.PhoneNumber);
+                if (!phoneResult.Succeeded)
+                {
+                    return false;
+                }
+            }
+
+            if ((vm.FirstName != null) || (vm.FirstName != string.Empty) && vm.FirstName != user.FirstName)
+            {
+                user.FirstName = vm.FirstName;
+            }
+
+            if ((vm.LastName != null) || (vm.LastName != string.Empty) && vm.LastName != user.LastName)
+            {
+                user.LastName = vm.LastName;
+            }
+
+            var updateResult = await userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                return false;
+            }
+
+            await signInManager.RefreshSignInAsync(user);
+
+            return true;
+        }
     }
 }
