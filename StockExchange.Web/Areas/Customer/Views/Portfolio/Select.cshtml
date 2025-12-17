@@ -2,6 +2,24 @@
 
 @{
     ViewData["Title"] = "Portfolio";
+
+    bool IsMarketCurrentlyOpen()
+    {
+        var easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+        var easternTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, easternZone);
+
+        if (easternTime.DayOfWeek == DayOfWeek.Saturday ||
+            easternTime.DayOfWeek == DayOfWeek.Sunday)
+            return false;
+
+        var marketOpen = new TimeSpan(9, 30, 0);
+        var marketClose = new TimeSpan(16, 0, 0);
+
+        return easternTime.TimeOfDay >= marketOpen &&
+               easternTime.TimeOfDay <= marketClose;
+    }
+
+    bool IsMarketOpen = IsMarketCurrentlyOpen();
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -39,7 +57,18 @@
                         
                         
                         <div class="me-3">
-                            <div class="fw-semibold">@holding.FullName</div>
+                            <div class="d-flex justify-content-start">
+                                <div class="fw-semibold">@holding.FullName</div>
+                                @if (IsMarketOpen)
+                                {
+                                    <div class="market-indicator open" data-tooltip="Markt is open"></div>
+                                }
+                                else
+                                {
+                                    <div class="market-indicator closed" data-tooltip="Market is closed"></div>
+                                }
+                            </div>
+                                
                             <div>@holding.TickerSymbol</div>
                             <div><small data-holding-quantity>@holding.Quantity</small>@(holding.Quantity == 1 ? " Share" : " Shares")</div>
                         </div>
@@ -57,8 +86,16 @@
                         </div>
 
                         <div>
-                            <a class="btn btn-primary" asp-area="Customer" asp-controller="Trade" asp-action="Buy" asp-route-stockId="@holding.StockId">Buy more</a>
-                            <a class="btn btn-secondary" asp-area="Customer" asp-controller="Trade" asp-action="Sell" asp-route-stockId="@holding.StockId">Sell</a>
+                            @if (IsMarketOpen)
+                            {
+                                <a class="btn btn-primary" asp-area="Customer" asp-controller="Trade" asp-action="Buy" asp-route-stockId="@holding.StockId">Buy more</a>
+                                <a class="btn btn-secondary" asp-area="Customer" asp-controller="Trade" asp-action="Sell" asp-route-stockId="@holding.StockId">Sell</a>
+                            } else
+                            {
+                                <button class="btn btn-primary" disabled>Buy more</button>
+                                <button class="btn btn-secondary" disabled>Sell</button>
+                            }
+
                         </div>
                     </div>
                 }

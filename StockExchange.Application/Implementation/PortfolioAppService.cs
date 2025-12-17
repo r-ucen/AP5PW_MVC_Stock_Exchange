@@ -221,15 +221,28 @@ namespace StockExchange.Application.Implementation
             };
         }
 
+        private bool IsMarketCurrentlyOpen()
+        {
+            var easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            var easternTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, easternZone);
+
+            if (easternTime.DayOfWeek == DayOfWeek.Saturday ||
+                easternTime.DayOfWeek == DayOfWeek.Sunday)
+                return false;
+
+            var marketOpen = new TimeSpan(9, 30, 0);
+            var marketClose = new TimeSpan(16, 0, 0);
+
+            return easternTime.TimeOfDay >= marketOpen &&
+                   easternTime.TimeOfDay <= marketClose;
+        }
+
         public async Task BuyStockAsync(int userId, TradeViewModel viewModel)
         {
-            /*
-            DayOfWeek day = DateTime.Now.DayOfWeek;
-            if ((day == DayOfWeek.Saturday) || (day == DayOfWeek.Sunday))
+            if (!IsMarketCurrentlyOpen())
             {
                 throw new InvalidOperationException("Market is closed.");
             }
-            */
 
             await using var dbTransaction = await _stockExchangeDbContext.Database.BeginTransactionAsync();
 
@@ -319,13 +332,11 @@ namespace StockExchange.Application.Implementation
 
         public async Task SellStockAsync(int userId, TradeViewModel viewModel)
         {
-            /*
-            DayOfWeek day = DateTime.Now.DayOfWeek;
-            if ((day == DayOfWeek.Saturday) || (day == DayOfWeek.Sunday))
+            if (!IsMarketCurrentlyOpen())
             {
                 throw new InvalidOperationException("Market is closed.");
             }
-            */
+            
 
             await using var dbTransaction = await _stockExchangeDbContext.Database.BeginTransactionAsync();
 

@@ -148,12 +148,12 @@ body {
         grid-template-rows: auto auto auto;
     }
 
-    .discover-list .holding-row > div:nth-child(1) { /* Icon */
-        grid-column: 1;
-        grid-row: 1;
-        align-self: center;
-        justify-self: center;
-    }
+        .discover-list .holding-row > div:nth-child(1) { /* Icon */
+            grid-column: 1;
+            grid-row: 1;
+            align-self: center;
+            justify-self: center;
+        }
 
     .discover-list .holding-row > div:nth-child(2) { /* Name/Ticker */
         grid-column: 2;
@@ -180,4 +180,44 @@ body {
         flex-grow: 1;
         text-align: center;
     }
+}
+
+.market-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    margin: 0 8px;
+    position: relative;
+    cursor: pointer;
+}
+
+.market-indicator.open {
+    background-color: #22c55e; /* Green */
+}
+
+.market-indicator.closed {
+    background-color: #ef4444; /* Red */
+}
+
+.market-indicator::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1000;
+}
+
+.market-indicator:hover::after {
+    opacity: 1;
 }
