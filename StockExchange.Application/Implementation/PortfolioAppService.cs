@@ -57,6 +57,8 @@ namespace StockExchange.Application.Implementation
 
             var holdings = await (from ps in _stockExchangeDbContext.PortfolioStocks.AsNoTracking()
                                   join s in _stockExchangeDbContext.Stocks.AsNoTracking() on ps.StockId equals s.Id
+                                  join m in _stockExchangeDbContext.Markets.AsNoTracking() on s.MarketId equals m.Id into mj
+                                  from m in mj.DefaultIfEmpty()
                                   where ps.PortfolioId == portfolio.Id
                                   select new PortfolioHoldingViewModel
                                   {
@@ -66,7 +68,8 @@ namespace StockExchange.Application.Implementation
                                       Quantity = ps.Quantity,
                                       CurrentPrice = s.CurrentPrice,
                                       ImageSrc = s.ImageSrc,
-                                      AvgPurchasePrice = ps.AvgPurchasePrice
+                                      AvgPurchasePrice = ps.AvgPurchasePrice,
+                                      IsMarketOpen = m.IsCurrentlyOpen
                                   }).ToListAsync();
 
             return holdings;
@@ -221,25 +224,32 @@ namespace StockExchange.Application.Implementation
             };
         }
 
-        private bool IsMarketCurrentlyOpen()
+        private async Task<bool> IsMarketCurrentlyOpen(int stockId)
         {
-            var easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-            var easternTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, easternZone);
 
-            if (easternTime.DayOfWeek == DayOfWeek.Saturday ||
-                easternTime.DayOfWeek == DayOfWeek.Sunday)
+            var stock = await _stockExchangeDbContext.Stocks
+                .Include(s => s.Market)
+                .Where(s => s.Id == stockId)
+                .AsNoTracking()
+                .SingleOrDefaultAsync();
+
+            var zone = TimeZoneInfo.FindSystemTimeZoneById(stock.Market.TimeZoneId);
+            var time = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, zone);
+
+            if (time.DayOfWeek == DayOfWeek.Saturday ||
+                time.DayOfWeek == DayOfWeek.Sunday)
                 return false;
 
-            var marketOpen = new TimeSpan(9, 30, 0);
-            var marketClose = new TimeSpan(16, 0, 0);
+            var marketOpen = stock.Market.OpenTime;
+            var marketClose = stock.Market.CloseTime;
 
-            return easternTime.TimeOfDay >= marketOpen &&
-                   easternTime.TimeOfDay <= marketClose;
+            return time.TimeOfDay >= marketOpen &&
+                   time.TimeOfDay <= marketClose;
         }
 
         public async Task BuyStockAsync(int userId, TradeViewModel viewModel)
         {
-            if (!IsMarketCurrentlyOpen())
+            if (!IsMarketCurrentlyOpen(viewModel.StockId).Result)
             {
                 throw new InvalidOperationException("Market is closed.");
             }
@@ -332,7 +342,7 @@ namespace StockExchange.Application.Implementation
 
         public async Task SellStockAsync(int userId, TradeViewModel viewModel)
         {
-            if (!IsMarketCurrentlyOpen())
+            if (!IsMarketCurrentlyOpen(viewModel.StockId).Result)
             {
                 throw new InvalidOperationException("Market is closed.");
             }

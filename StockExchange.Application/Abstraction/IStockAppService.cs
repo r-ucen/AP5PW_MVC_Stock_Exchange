@@ -1,4 +1,5 @@
-﻿using StockExchange.Domain.Entities;
+﻿using StockExchange.Application.ViewModels;
+using StockExchange.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace StockExchange.Application.Abstraction
     public interface IStockAppService
     {
         IList<Stock> Select();
+        public Task<IList<StockMarketViewModel>> GetStockMarketViewModels();
         Stock? Select(int id);
         void Create(Stock stock);
         bool Delete(int id);

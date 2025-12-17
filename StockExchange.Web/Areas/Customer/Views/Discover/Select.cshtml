@@ -1,26 +1,8 @@
-﻿@model IList<Stock>
+﻿@model IList<StockMarketViewModel>
 
 
 @{
     ViewData["Title"] = "Discover";
-
-    bool IsMarketCurrentlyOpen()
-    {
-        var easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-        var easternTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, easternZone);
-
-        if (easternTime.DayOfWeek == DayOfWeek.Saturday ||
-            easternTime.DayOfWeek == DayOfWeek.Sunday)
-            return false;
-
-        var marketOpen = new TimeSpan(9, 30, 0);
-        var marketClose = new TimeSpan(16, 0, 0);
-
-        return easternTime.TimeOfDay >= marketOpen &&
-               easternTime.TimeOfDay <= marketClose;
-    }
-
-    bool IsMarketOpen = IsMarketCurrentlyOpen();
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -67,7 +49,7 @@
                             <div class="stock-details">
                                 <div class="d-flex justify-content-start align-items-center">
                                     <div class="fw-semibold">@stock.FullName</div>
-                                    @if (IsMarketOpen)
+                                    @if (stock.isMarketOpen)
                                     {
                                         <div class="market-indicator open" data-tooltip="Market is open"></div>
                                     }
@@ -85,7 +67,7 @@
                         </div>
 
                         <div class="action-buttons">
-                            @if (IsMarketOpen) {
+                            @if (stock.isMarketOpen) {
                                 <a class="btn btn-primary" asp-area="Customer" asp-controller="Trade" asp-action="Buy" asp-route-stockId="@stock.Id">Buy</a>
                             } else {
                                 <button class="btn btn-secondary" disabled>Buy</button>

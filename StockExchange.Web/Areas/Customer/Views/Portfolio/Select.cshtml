@@ -2,24 +2,6 @@
 
 @{
     ViewData["Title"] = "Portfolio";
-
-    bool IsMarketCurrentlyOpen()
-    {
-        var easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-        var easternTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, easternZone);
-
-        if (easternTime.DayOfWeek == DayOfWeek.Saturday ||
-            easternTime.DayOfWeek == DayOfWeek.Sunday)
-            return false;
-
-        var marketOpen = new TimeSpan(9, 30, 0);
-        var marketClose = new TimeSpan(16, 0, 0);
-
-        return easternTime.TimeOfDay >= marketOpen &&
-               easternTime.TimeOfDay <= marketClose;
-    }
-
-    bool IsMarketOpen = IsMarketCurrentlyOpen();
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -73,7 +55,7 @@
                             <div class="stock-details">
                                 <div class="d-flex justify-content-start align-items-center">
                                     <div class="fw-semibold">@holding.FullName</div>
-                                    @if (IsMarketOpen)
+                                    @if (holding.IsMarketOpen)
                                     {
                                         <div class="market-indicator open" data-tooltip="Market is open"></div>
                                     }
@@ -100,7 +82,7 @@
                         </div>
 
                         <div class="action-buttons">
-                            @if (IsMarketOpen)
+                            @if (holding.IsMarketOpen)
                             {
                                 <a class="btn btn-primary" asp-area="Customer" asp-controller="Trade" asp-action="Buy" asp-route-stockId="@holding.StockId">Buy more</a>
                                 <a class="btn btn-secondary" asp-area="Customer" asp-controller="Trade" asp-action="Sell" asp-route-stockId="@holding.StockId">Sell</a>

@@ -1,4 +1,6 @@
-﻿using StockExchange.Application.Abstraction;
+﻿using Microsoft.EntityFrameworkCore;
+using StockExchange.Application.Abstraction;
+using StockExchange.Application.ViewModels;
 using StockExchange.Domain.Entities;
 using StockExchange.Infrastructure.Database;
 using System;
@@ -22,6 +24,33 @@ namespace StockExchange.Application.Implementation
         public IList<Stock> Select()
         {
             return _stockExchangeDbContext.Stocks.ToList();
+        }
+
+        public async Task<IList<StockMarketViewModel>> GetStockMarketViewModels()
+        {
+            var stocks = await _stockExchangeDbContext.Stocks
+                .Include(s => s.Market)
+                .ToListAsync();
+
+            var list = new List<StockMarketViewModel>(stocks.Count);
+
+            foreach (var s in stocks)
+            {
+                if (s.Market != null)
+                {
+                    list.Add(new StockMarketViewModel
+                    {
+                        Id = s.Id,
+                        TickerSymbol = s.TickerSymbol,
+                        FullName = s.FullName,
+                        CurrentPrice = s.CurrentPrice,
+                        ImageSrc = s.ImageSrc,
+                        isMarketOpen = s.Market.IsCurrentlyOpen
+                    });
+                }
+            }
+
+            return list;
         }
 
         public Stock? Select(int id)

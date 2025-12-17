@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockExchange.Application.Abstraction;
+using StockExchange.Application.ViewModels;
 using StockExchange.Domain.Entities;
 using StockExchange.Infrastructure.Identity.Enums;
 
@@ -17,10 +18,10 @@ namespace StockExchange.Web.Areas.Customer.Controllers
             _stockAppService = stockAppService;
         }
 
-        public IActionResult Select()
+        public async Task<IActionResult> Select()
         {
 
-            IList<Stock> stocks = _stockAppService.Select();
+            IList<StockMarketViewModel> stocks = await _stockAppService.GetStockMarketViewModels();
 
             return View(stocks);
         }

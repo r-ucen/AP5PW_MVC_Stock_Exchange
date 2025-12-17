@@ -15,6 +15,7 @@ namespace StockExchange.Application.ViewModels
         public decimal CurrentPrice { get; set; }
         public string? ImageSrc { get; set; }
         public decimal AvgPurchasePrice { get; set; }
+        public bool IsMarketOpen { get; set; }
         public decimal TotalValue => Quantity * CurrentPrice;
         public decimal GainLoss => (Quantity * CurrentPrice) - (Quantity * AvgPurchasePrice);
         public decimal GainLossPercentage => AvgPurchasePrice == 0 ? 0m : GainLoss / (Quantity * AvgPurchasePrice) * 100;
