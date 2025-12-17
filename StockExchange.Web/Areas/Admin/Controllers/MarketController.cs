@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using StockExchange.Application.Abstraction;
+using StockExchange.Application.Implementation;
+using StockExchange.Domain.Entities;
 using StockExchange.Infrastructure.Identity.Enums;
 using System.Threading.Tasks;
 
@@ -21,6 +24,41 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         {
             var markets = await _marketService.GetAllMarketsAsync();
             return View(markets);
+        }
+
+        public IActionResult Create()
+        {
+            var timeZones = TimeZoneInfo.GetSystemTimeZones().Select(tz => tz.Id).ToList();
+            ViewBag.TimeZones = new SelectList(timeZones);
+            return View(new Market());
+        }
+
+        [HttpPost]
+        public IActionResult Create(Market market)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _marketService.Create(market);
+                    return RedirectToAction(nameof(MarketController.Select));
+                }
+                catch (TimeZoneNotFoundException)
+                {
+                    ModelState.AddModelError(nameof(market.TimeZoneId), "Selected time zone is not available on this server.");
+                    return View(market);
+                }
+                catch (InvalidTimeZoneException)
+                {
+                    ModelState.AddModelError(nameof(market.TimeZoneId), "Selected time zone is invalid.");
+                    return View(market);
+                }
+                catch (Exception ex) {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return View(market);
+                }
+            }
+            return View(market);
         }
     }
 }

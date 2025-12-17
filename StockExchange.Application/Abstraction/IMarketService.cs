@@ -10,5 +10,6 @@ namespace StockExchange.Application.Abstraction
     public interface IMarketService
     {
         Task<IList<Market>> GetAllMarketsAsync();
+        void Create(Market market);
     }
 }

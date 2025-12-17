@@ -20,6 +20,34 @@ namespace StockExchange.Application.Implementation
             _stockExchangeDbContext = stockExchangeDbContext;
         }
 
+        private bool CalculateIsOpen(Market market)
+        {
+            if (string.IsNullOrWhiteSpace(market.TimeZoneId))
+                throw new InvalidOperationException("Market TimeZoneId is not set.");
+
+            TimeZoneInfo.FindSystemTimeZoneById(market.TimeZoneId);
+
+            var zone = TimeZoneInfo.FindSystemTimeZoneById(market.TimeZoneId);
+            var time = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, zone);
+
+            if (time.DayOfWeek == DayOfWeek.Saturday ||
+                time.DayOfWeek == DayOfWeek.Sunday)
+                return false;
+
+            var marketOpen = market.OpenTime;
+            var marketClose = market.CloseTime;
+
+            return time.TimeOfDay >= marketOpen &&
+                   time.TimeOfDay <= marketClose;
+        }
+
+        public void Create(Market market)
+        {
+            market.IsCurrentlyOpen = CalculateIsOpen(market);
+            _stockExchangeDbContext.Markets.Add(market);
+            _stockExchangeDbContext.SaveChanges();
+        }
+
         public async Task<IList<Market>> GetAllMarketsAsync()
         {
             return await _stockExchangeDbContext.Markets.ToListAsync();
