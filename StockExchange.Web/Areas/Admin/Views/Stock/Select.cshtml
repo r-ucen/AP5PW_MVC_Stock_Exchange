@@ -19,6 +19,7 @@
                     <th scope="col">@nameof(Stock.FullName)</th>
                     <th scope="col">@nameof(Stock.CurrentPrice)</th>
                     <th scope="col">@nameof(Stock.ImageSrc)</th>
+                    <th scope="col">Image preview</th>
                     <th scope="col">@nameof(Stock.MarketId)</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -37,11 +38,18 @@
                         </td>
                         <td>
                             <span>@stock.ImageSrc</span>
+                        </td>
+
+                        <td>
                             @if (!string.IsNullOrEmpty(stock.ImageSrc))
                             {
                                 <img src="@Url.Content(stock.ImageSrc)" alt="@stock.FullName" width="20" height="20" />
+                            } else
+                            {
+                                <span>No preview</span>
                             }
                         </td>
+
                         <td>
                             @stock.MarketId
                         </td>
