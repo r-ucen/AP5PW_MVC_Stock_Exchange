@@ -25,7 +25,7 @@ namespace StockExchange.Web.Areas.Admin.Controllers
             return View(users);
         }
 
-
+        [Authorize(Roles = nameof(Roles.Admin))]
         public IActionResult Delete(int id)
         {
             var user = _accountService.GetUserById(id).Result;
@@ -41,6 +41,7 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public IActionResult DeleteConfirmed(int id)
         {
             var user = _accountService.GetUserById(id).Result;
@@ -60,6 +61,7 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         }
 
         // Disable User
+        [Authorize(Roles = nameof(Roles.Admin))]
         public IActionResult Disable(int id)
         {
             var user = _accountService.GetUserById(id).Result;
@@ -75,6 +77,7 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         }
 
         [HttpPost, ActionName("Disable")]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public IActionResult DisableConfirmed(int id)
         {
             var user = _accountService.GetUserById(id).Result;
@@ -94,6 +97,7 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         }
 
         // Enable User
+        [Authorize(Roles = nameof(Roles.Admin))]
         public IActionResult Enable(int id)
         {
             var user = _accountService.GetUserById(id).Result;
@@ -109,6 +113,7 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         }
 
         [HttpPost, ActionName("Enable")]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public IActionResult EnableConfirmed(int id)
         {
             var user = _accountService.GetUserById(id).Result;
@@ -127,13 +132,9 @@ namespace StockExchange.Web.Areas.Admin.Controllers
                 return BadRequest();
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         public IActionResult EditRoles(int id)
         {
-            if (!User.IsInRole(nameof(Roles.Admin)))
-            {
-                return RedirectToAction("Select");
-            }
-
             var user = _accountService.GetUserById(id).Result;
 
             if (!CanModifyUser(user))
@@ -155,13 +156,9 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         }
 
         [HttpPost, ActionName("EditRoles")]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public IActionResult EditRolesConfirmed(int id, EditUserRolesViewModel model)
         {
-            if (!User.IsInRole(nameof(Roles.Admin)))
-            {
-                return RedirectToAction("Select");
-            }
-
             var user = _accountService.GetUserById(id).Result;
             if (user == null) { 
                 return NotFound();
@@ -193,28 +190,21 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         {
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var loggedInAsAdmin = User.IsInRole(nameof(Roles.Admin));
-            var loggedInAsManager = User.IsInRole(nameof(Roles.Manager));
 
             var userIsCurrentUser = currentUserId == user.Id.ToString();
             var userIsAdmin = user.Roles.Contains(nameof(Roles.Admin));
-            var userIsManager = user.Roles.Contains(nameof(Roles.Manager));
-
+            
             if (userIsCurrentUser)
             {
                 return false;
             }
 
-            if (loggedInAsAdmin)
+            if (!loggedInAsAdmin)
             {
-                return !userIsAdmin;
+                return false;
             }
-
-            if (loggedInAsManager)
-            {
-                return !userIsAdmin && !userIsManager;
-            }
-
-            return true;
+            
+            return !userIsAdmin;
         }
     }
 }
