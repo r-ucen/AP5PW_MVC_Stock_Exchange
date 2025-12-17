@@ -63,6 +63,7 @@ builder.Services.AddScoped<IPortfolioStockAppService, PortfolioStockAppService>(
 builder.Services.AddSignalR();
 
 builder.Services.AddHostedService<StockPriceUpdateService>();
+builder.Services.AddHostedService<MarketStatusUpdateService>();
 
 var app = builder.Build();
 

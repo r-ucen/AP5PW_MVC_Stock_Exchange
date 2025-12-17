@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockExchange.Infrastructure.Database;
 
@@ -11,9 +12,11 @@ using StockExchange.Infrastructure.Database;
 namespace StockExchange.Infrastructure.Migrations
 {
     [DbContext(typeof(StockExchangeDbContext))]
-    partial class StockExchangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251217150753_AddMarketEntity")]
+    partial class AddMarketEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -389,7 +392,6 @@ namespace StockExchange.Infrastructure.Migrations
                             CurrentPrice = 150.00m,
                             FullName = "Apple Inc.",
                             ImageSrc = "/img/stocks/AAPL.png",
-                            MarketId = 1,
                             TickerSymbol = "AAPL"
                         },
                         new
@@ -398,7 +400,6 @@ namespace StockExchange.Infrastructure.Migrations
                             CurrentPrice = 400.00m,
                             FullName = "Microsoft Corporation",
                             ImageSrc = "/img/stocks/MSFT.png",
-                            MarketId = 1,
                             TickerSymbol = "MSFT"
                         },
                         new
@@ -407,7 +408,6 @@ namespace StockExchange.Infrastructure.Migrations
                             CurrentPrice = 280.00m,
                             FullName = "Alphabet Inc.",
                             ImageSrc = "/img/stocks/GOOGL.png",
-                            MarketId = 1,
                             TickerSymbol = "GOOGL"
                         },
                         new
@@ -416,7 +416,6 @@ namespace StockExchange.Infrastructure.Migrations
                             CurrentPrice = 250.00m,
                             FullName = "Amazon.com, Inc.",
                             ImageSrc = "/img/stocks/AMZN.png",
-                            MarketId = 1,
                             TickerSymbol = "AMZN"
                         },
                         new
@@ -425,7 +424,6 @@ namespace StockExchange.Infrastructure.Migrations
                             CurrentPrice = 450.00m,
                             FullName = "Tesla, Inc.",
                             ImageSrc = "/img/stocks/TSLA.png",
-                            MarketId = 1,
                             TickerSymbol = "TSLA"
                         });
                 });

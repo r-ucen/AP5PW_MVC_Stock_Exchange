@@ -19,6 +19,7 @@ namespace StockExchange.Infrastructure.Database
         public DbSet<PortfolioStock> PortfolioStocks { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Market> Markets { get; set; }
 
         public StockExchangeDbContext(DbContextOptions options) : base(options)
         {
@@ -59,6 +60,9 @@ namespace StockExchange.Infrastructure.Database
 
             PortfolioStockInit portfolioStockInit = new PortfolioStockInit();
             modelBuilder.Entity<PortfolioStock>().HasData(portfolioStockInit.GetPortfolioStocks());
+
+            MarketInit marketInit = new MarketInit();
+            modelBuilder.Entity<Market>().HasData(marketInit.GetMarkets());
 
             // seeding Identity
             // Identity - User and Role init

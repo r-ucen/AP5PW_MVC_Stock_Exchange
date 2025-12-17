@@ -27,7 +27,10 @@ namespace StockExchange.Domain.Entities
 
         public string? ImageSrc { get; set; }
 
+        public int? MarketId { get; set; }
+
         // Navigation properties
+        public Market? Market { get; set; }
         public ICollection<PortfolioStock> PortfolioStocks { get; set; } = new List<PortfolioStock>();
         public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
         public ICollection<Order> Orders { get; set; } = new List<Order>();
