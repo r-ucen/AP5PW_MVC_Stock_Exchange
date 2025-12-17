@@ -53,12 +53,33 @@ namespace StockExchange.Web.Areas.Admin.Controllers
                     ModelState.AddModelError(nameof(market.TimeZoneId), "Selected time zone is invalid.");
                     return View(market);
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     ModelState.AddModelError(string.Empty, ex.Message);
                     return View(market);
                 }
             }
             return View(market);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var market = _marketService.GetMarketById(id);
+            if (market != null)
+            {
+                return View(market);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _marketService.Delete(id);
+            return RedirectToAction(nameof(MarketController.Select));
         }
     }
 }

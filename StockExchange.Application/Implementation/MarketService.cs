@@ -48,9 +48,24 @@ namespace StockExchange.Application.Implementation
             _stockExchangeDbContext.SaveChanges();
         }
 
+        public void Delete(int id)
+        {
+            var market = _stockExchangeDbContext.Markets.FirstOrDefault(m => m.Id == id);
+            if (market != null)
+            {
+                _stockExchangeDbContext.Markets.Remove(market);
+                _stockExchangeDbContext.SaveChanges();
+            }
+        }
+
         public async Task<IList<Market>> GetAllMarketsAsync()
         {
             return await _stockExchangeDbContext.Markets.ToListAsync();
+        }
+
+        public Market? GetMarketById(int id)
+        {
+            return _stockExchangeDbContext.Markets.FirstOrDefault(m => m.Id == id);
         }
     }
 }

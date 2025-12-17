@@ -11,5 +11,7 @@ namespace StockExchange.Application.Abstraction
     {
         Task<IList<Market>> GetAllMarketsAsync();
         void Create(Market market);
+        public void Delete(int id);
+        public Market? GetMarketById(int id);
     }
 }
