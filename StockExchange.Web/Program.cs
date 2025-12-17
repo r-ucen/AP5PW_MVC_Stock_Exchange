@@ -52,7 +52,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
-
+builder.Services.AddScoped<IMarketService, MarketService>();
 builder.Services.AddScoped<IStockAppService, StockAppService>();
 builder.Services.AddScoped<ITransactionAppService, TransactionAppService>();
 builder.Services.AddScoped<IAccountService, AccountIdentityService>();

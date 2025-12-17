@@ -1,0 +1,44 @@
+﻿@model IList<Market>
+
+@{
+    ViewData["Title"] = "Market Administration";
+}
+
+
+<h1>@ViewData["Title"]</h1>
+
+@{
+    if (Model != null && Model.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">@nameof(Market.Id)</th>
+                        <th scope="col">@nameof(Market.Name)</th>
+                        <th scope="col">@nameof(Market.TimeZoneId)</th>
+                        <th scope="col">@nameof(Market.OpenTime)</th>
+                        <th scope="col">@nameof(Market.CloseTime)</th>
+                        <th scope="col">@nameof(Market.IsCurrentlyOpen)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var market in Model)
+                    {
+                        <tr>
+                            <th scope="row">@market.Id</th>
+                            <td>@market.Name</td>
+                            <td>@market.TimeZoneId</td>
+                            <td>@market.OpenTime</td>
+                            <td>@market.CloseTime</td>
+                            <td>@market.IsCurrentlyOpen</td>
+                        </tr>
+                    }
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>Market table is empty</p>
+    }
+}
