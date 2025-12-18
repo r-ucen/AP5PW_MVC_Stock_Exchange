@@ -1,0 +1,40 @@
+﻿@model Market
+
+@{
+    ViewData["Title"] = "Update Market";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<form asp-action="Update" method="post">
+    <div asp-validation-summary="All"></div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="Name"></label>
+        <input class="form-control" asp-for="Name">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="TimeZoneId"></label>
+        <select class="form-control" asp-for="TimeZoneId" asp-items="(IEnumerable<SelectListItem>)ViewBag.TimeZones">
+            <option value="">-- select time zone --</option>
+        </select>
+        <span asp-validation-for="TimeZoneId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="OpenTime"></label>
+        <input asp-for="OpenTime" type="time" class="form-control" step="60" />
+        <span asp-validation-for="OpenTime" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="CloseTime"></label>
+        <input asp-for="CloseTime" type="time" class="form-control" step="60" />
+        <span asp-validation-for="CloseTime" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-action="Select" class="btn btn-secondary">Cancel</a>
+</form>

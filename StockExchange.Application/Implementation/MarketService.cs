@@ -67,5 +67,20 @@ namespace StockExchange.Application.Implementation
         {
             return _stockExchangeDbContext.Markets.FirstOrDefault(m => m.Id == id);
         }
+
+        public bool Update(Market market)
+        {
+            var existingMarket = GetMarketById(market.Id);
+
+            if (existingMarket == null)
+            {
+                return false;
+            }
+
+            _stockExchangeDbContext.Entry(existingMarket).CurrentValues.SetValues(market);
+            existingMarket.Id = market.Id;
+            _stockExchangeDbContext.SaveChanges();
+            return true;
+        }
     }
 }

@@ -81,5 +81,33 @@ namespace StockExchange.Web.Areas.Admin.Controllers
             _marketService.Delete(id);
             return RedirectToAction(nameof(MarketController.Select));
         }
+
+        // Update
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var market = _marketService.GetMarketById(id);
+            if (market == null)
+            {
+                return NotFound();
+            }
+
+            var timeZones = TimeZoneInfo.GetSystemTimeZones().Select(tz => tz.Id).ToList();
+            ViewBag.TimeZones = new SelectList(timeZones);
+
+            return View(market);
+        }
+
+        [HttpPost, ActionName("Update")]
+        public IActionResult UpdateConfirmed(Market market)
+        {
+            if (ModelState.IsValid)
+            {
+                _marketService.Update(market);
+                return RedirectToAction(nameof(MarketController.Select));
+            }
+
+            return View(market);
+        }
     }
 }

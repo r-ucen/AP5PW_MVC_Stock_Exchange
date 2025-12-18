@@ -13,5 +13,6 @@ namespace StockExchange.Application.Abstraction
         void Create(Market market);
         public void Delete(int id);
         public Market? GetMarketById(int id);
+        public bool Update(Market market);
     }
 }
