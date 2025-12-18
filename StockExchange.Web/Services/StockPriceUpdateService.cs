@@ -51,7 +51,7 @@ namespace StockExchange.Web.Services
             var hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<StockHub>>();
             var portfolioAppService = scope.ServiceProvider.GetRequiredService<IPortfolioAppService>();
 
-            var stocks = await dbContext.Stocks.ToListAsync(stoppingToken);
+            var stocks = await dbContext.Stocks.Include(s => s.Market).ToListAsync(stoppingToken);
             if (stocks.Count == 0)
                 return;
 
@@ -59,6 +59,8 @@ namespace StockExchange.Web.Services
 
             foreach (var stock in stocks)
             {
+                if (stock.Market == null || !stock.Market.IsCurrentlyOpen)
+                    continue;
                 var priceChangeRate = (decimal)((_random.NextDouble() - 0.5) * 0.001); // -0.05% to 0.05%
                 var newStockPrice = stock.CurrentPrice + (stock.CurrentPrice * priceChangeRate);
                 stock.CurrentPrice = Math.Round(newStockPrice, 2);
