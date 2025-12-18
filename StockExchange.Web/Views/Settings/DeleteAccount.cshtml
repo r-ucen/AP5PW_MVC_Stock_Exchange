@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Delete Account";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card">
+    <div class="card-body">
+
+        <form asp-action="DeleteAccount" asp-controller="Settings" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <p>Are you sure you want to permanently delete your account?</p>
+
+            <button type="submit" class="btn btn-danger">Permanently Delete My Account</button>
+            <a asp-action="Select" asp-controller="Settings" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

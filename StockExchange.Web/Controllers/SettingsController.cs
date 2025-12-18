@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StockExchange.Application.Abstraction;
 using StockExchange.Application.ViewModels;
+using StockExchange.Domain.Entities.Interfaces;
+using StockExchange.Infrastructure.Identity;
 using StockExchange.Infrastructure.Identity.Enums;
 using System;
 
@@ -12,9 +15,17 @@ namespace StockExchange.Web.Controllers
 
         IAccountService _accountService;
 
-        public SettingsController(IAccountService accountService)
+        UserManager<User> _userManager;
+        SignInManager<User> _signInManager;
+
+
+        public SettingsController(IAccountService accountService,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _accountService = accountService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Select()
@@ -46,6 +57,38 @@ namespace StockExchange.Web.Controllers
             }
 
             return RedirectToAction("Index", "Home", new { area = "" });
-        } 
+        }
+
+        public IActionResult DeleteAccount()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("DeleteAccount")]
+        public async Task<IActionResult> DeleteAccountConfirmed()
+        {
+            if (User.IsInRole(nameof(Roles.Admin)))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                await _signInManager.SignOutAsync();
+                return RedirectToAction("Index", "Home");
+            }
+
+            var deleteResult = await _userManager.DeleteAsync(user);
+            if (!deleteResult.Succeeded)
+            {
+                return View();
+            }
+
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
