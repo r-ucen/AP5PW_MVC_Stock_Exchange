@@ -84,8 +84,11 @@ namespace StockExchange.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _stockAppService.Update(stock);
-                return RedirectToAction(nameof(StockController.Select));
+                bool result = _stockAppService.Update(stock);
+                if (result)
+                {
+                    return RedirectToAction(nameof(StockController.Select));
+                }
             }
 
             return View(stock);

@@ -94,6 +94,10 @@ namespace StockExchange.Application.Implementation
             {
                 return false;
             }
+            var market = _stockExchangeDbContext.Markets.FirstOrDefault(m => m.Id == stock.MarketId);
+            if (market == null) {
+                return false;
+            }
 
             _stockExchangeDbContext.Entry(existingStock).CurrentValues.SetValues(stock);
             existingStock.Id = stock.Id;
